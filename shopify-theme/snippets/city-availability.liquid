@@ -1,21 +1,18 @@
 {%- comment -%}
-  Shows only the products sold in the city the visitor picked (Deliver to).
-  1) tiny script sets html[data-city] BEFORE the page paints (no flash)
-  2) generated CSS hides product cards whose data-cities does not include that city
+  Shows only the products sold in the city the visitor picked ("Deliver to").
+  Runs before first paint: sets html[data-city] and ONE small style rule for that city
+  (no rules at all when no city is chosen, which keeps style matching cheap).
+  Products carry data-cities (from tags like city-jeddah); no tag = sold everywhere.
 {%- endcomment -%}
 <script>
   try {
     var c = JSON.parse(localStorage.getItem('gy_city') || 'null');
-    if (c) document.documentElement.setAttribute('data-city', String(c).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''));
+    if (c) {
+      var s = String(c).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      document.documentElement.setAttribute('data-city', s);
+      var st = document.createElement('style'); st.id = 'gy-city';
+      st.textContent = 'html[data-city="' + s + '"] li:has(> .pcard[data-cities]:not([data-cities~="' + s + '"])),html[data-city="' + s + '"] .pcard[data-cities]:not([data-cities~="' + s + '"]){display:none!important}';
+      document.head.appendChild(st);
+    }
   } catch (e) {}
 </script>
-{%- assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />' -%}
-<style>
-  {%- for line in city_lines -%}
-    {%- assign c = line | strip | handleize -%}
-    {%- if c != blank -%}
-  html[data-city="{{ c }}"] li:has(> .pcard[data-cities]:not([data-cities~="{{ c }}"])),
-  html[data-city="{{ c }}"] .pcard[data-cities]:not([data-cities~="{{ c }}"]) { display: none !important; }
-    {%- endif -%}
-  {%- endfor -%}
-</style>

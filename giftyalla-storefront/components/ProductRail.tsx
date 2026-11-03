@@ -3,7 +3,7 @@ import { ProductCard } from './ProductCard'
 import { Rail } from './Rail'
 import { getCollection } from '@/lib/shopify'
 
-export async function ProductRail({ heading, sub, handle, tone = 'none', limit = 10 }: { heading: string; sub?: string; handle: string; tone?: 'none' | 'mint' | 'lilac'; limit?: number }) {
+export async function ProductRail({ heading, sub, handle, tone = 'none', limit = 8 }: { heading: string; sub?: string; handle: string; tone?: 'none' | 'mint' | 'lilac'; limit?: number }) {
   const col = await getCollection(handle)
   if (!col || col.products.length === 0) return null
   return (

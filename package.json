@@ -1,0 +1,11 @@
+{
+  "name": "gift-yalla",
+  "private": true,
+  "scripts": {
+    "build:theme": "node tools/build-theme.mjs",
+    "watch:theme": "node tools/build-theme.mjs --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.0"
+  }
+}

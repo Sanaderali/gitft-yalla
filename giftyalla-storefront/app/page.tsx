@@ -21,7 +21,7 @@ async function BestGifts() {
         label,
         panel: (
           <Rail>
-            {(col?.products ?? []).slice(0, 8).map((p) => <li key={p.id} className="pcard-wrap"><ProductCard product={p} /></li>)}
+            {(col?.products ?? []).slice(0, 6).map((p) => <li key={p.id} className="pcard-wrap"><ProductCard product={p} /></li>)}
           </Rail>
         )
       }

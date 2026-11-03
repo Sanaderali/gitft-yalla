@@ -16,5 +16,13 @@
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "typescript": "^7.0.2"
-  }
+  },
+  "browserslist": [
+    "chrome >= 100",
+    "edge >= 100",
+    "safari >= 15.4",
+    "firefox >= 100",
+    "ios_saf >= 15.4",
+    "and_chr >= 100"
+  ]
 }

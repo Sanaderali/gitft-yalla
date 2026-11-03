@@ -83,8 +83,8 @@
     <span class="header__break" aria-hidden="true"></span>
 
     <label class="citypill" title="{{ 'general.deliver_to' | t }}">
-      {%- if section.settings.flag_country != blank -%}
-        <img class="citypill__flag" src="https://flagcdn.com/w80/{{ section.settings.flag_country | downcase | strip }}.png" width="32" height="32" alt="" loading="eager" decoding="async">
+      {%- if section.settings.flag_country != blank and section.settings.flag_country != 'none' -%}
+        <img class="citypill__flag" src="{{ 'flag-' | append: section.settings.flag_country | append: '.svg' | asset_url }}" width="32" height="32" alt="" decoding="async">
       {%- else -%}
         <span class="citypill__ico">{% render 'icon', name: 'pin' %}</span>
       {%- endif -%}
@@ -217,7 +217,7 @@
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo (text logo is used until you add one)" },
     { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
-    { "type": "text", "id": "flag_country", "label": "Flag in the city button (2-letter country code, empty for a pin icon)", "default": "sa" },
+    { "type": "select", "id": "flag_country", "label": "Flag in the city button", "default": "sa", "options": [{ "value": "sa", "label": "Saudi Arabia" }, { "value": "ae", "label": "UAE" }, { "value": "kw", "label": "Kuwait" }, { "value": "qa", "label": "Qatar" }, { "value": "bh", "label": "Bahrain" }, { "value": "jo", "label": "Jordan" }, { "value": "none", "label": "No flag (pin icon)" }] },
     { "type": "text", "id": "corporate_label", "label": "Corporate button label (empty to hide)", "default": "Corporate" },
     { "type": "url", "id": "corporate_url", "label": "Corporate button link" }
   ]

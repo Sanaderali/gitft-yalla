@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Suspense } from 'react'
 import { ProductCard } from '@/components/ProductCard'
 import { ProductForm } from '@/components/ProductForm'
 import { Tile } from '@/components/Tile'
@@ -22,8 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: p.title, description: desc, openGraph: p.featuredImage ? { images: [p.featuredImage.url] } : undefined }
 }
 
-async function Details({ params }: Props) {
-  const { handle } = await params
+async function Details({ handle }: { handle: string }) {
   const [product, addonCol] = await Promise.all([getProduct(handle), getCollection('add-ons')])
   if (!product) notFound()
   // Add-ons need their variant ids, so read the full (cached) products.
@@ -82,13 +80,12 @@ async function Details({ params }: Props) {
   )
 }
 
-export default function ProductPage(props: Props) {
+export default async function ProductPage({ params }: Props) {
+  const { handle } = await params
   return (
     <section className="section pdp">
       <div className="container">
-        <Suspense fallback={<div className="pdp__grid"><div className="skeleton skeleton--hero" /><div className="skeleton skeleton--hero" /></div>}>
-          <Details {...props} />
-        </Suspense>
+        <Details handle={handle} />
       </div>
     </section>
   )

@@ -33,3 +33,7 @@ Rules live in `lib/config.ts` (cities, slots, cutoff hours, days ahead, blocked 
 ## Not built yet
 
 Arabic/RTL, wishlist, customer accounts, filters beyond sorting. The CSS already uses logical properties, so RTL is straightforward to add.
+
+## Measuring speed
+
+Always test the production build (`npm run build` then `npm start`) or your deployed site. `npm run dev` is not optimized and scores far lower. In my mobile test (Lighthouse, simulated mid-range phone on slow 4G) the demo scored 100 on home, 99 on collections and 100 on product pages.

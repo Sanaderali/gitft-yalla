@@ -73,31 +73,6 @@
         "label": "Favicon"
       },
       {
-        "type": "select",
-        "id": "icon_style",
-        "label": "Icon style (Font Awesome)",
-        "info": "Solid works with a free kit. Regular, Light and Thin need a Font Awesome Pro kit.",
-        "default": "fa-solid",
-        "options": [
-          {
-            "value": "fa-solid",
-            "label": "Solid"
-          },
-          {
-            "value": "fa-regular",
-            "label": "Regular (Pro)"
-          },
-          {
-            "value": "fa-light",
-            "label": "Light (Pro)"
-          },
-          {
-            "value": "fa-thin",
-            "label": "Thin (Pro)"
-          }
-        ]
-      },
-      {
         "type": "text",
         "id": "whatsapp_number",
         "label": "WhatsApp number",

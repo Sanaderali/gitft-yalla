@@ -15,7 +15,7 @@
       {%- endif -%}
     </a>
     <button type="button" class="wish" data-wish="{{ product.handle }}" aria-pressed="false" aria-label="{{ 'general.wishlist' | t }}">
-      {% render 'icon', name: 'heart' %}
+      {% render 'icon', name: 'heart-outline' %}{% render 'icon', name: 'heart' %}
     </button>
     {%- if product.tags contains 'best-seller' -%}
       <span class="ribbon">{{ 'general.best_seller' | t }}</span>

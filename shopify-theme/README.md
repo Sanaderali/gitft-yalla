@@ -63,3 +63,16 @@ Logo idea: bold rounded wordmark "Gift Yalla!" with a sunshine-yellow dot, optio
 ## Structure
 
 `layout/` · `sections/` (home blocks + `main-*` page sections) · `snippets/` (product card, delivery picker, icons) · `assets/theme.css|js` · `config/` (settings) · `locales/` (en, ar) · `templates/` · `seed/` (dummy data, not pushed to Shopify).
+
+## Speed notes (read before editing)
+
+- **Edit `src/theme.css` and `src/theme.js`, not the files in `assets/`.** The `assets/` copies are minified build output. After editing, run from the repo root:
+
+  ```bash
+  npm install
+  npm run build:theme
+  ```
+
+  (`npm run watch:theme` rebuilds on every save.)
+- No external requests: DM Sans and Cairo fonts, flags and all icons are bundled in the theme. Icons are Font Awesome Free (CC BY 4.0) in `snippets/icon-sprite.liquid`.
+- Test speed on the **published** store, not a password-protected dev store (PageSpeed would only see the password page).
