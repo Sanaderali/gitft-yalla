@@ -22,42 +22,53 @@
         </a>
       {%- endif -%}
 
-      {%- if localization.available_countries.size > 0 -%}
+      {%- comment -%} Currency: shows the current one, the dropdown lists only the OTHER countries/currencies. {%- endcomment -%}
+      {%- if localization.available_countries.size > 1 -%}
         <details class="loc hide-sm">
           <summary class="hpill">
-            <span class="hpill__code">{{ localization.country.currency.symbol }} {{ localization.country.currency.iso_code }}</span>
+            <span class="hpill__code">{{ localization.country.currency.iso_code }}</span>
             {% render 'icon', name: 'chevron' %}
           </summary>
-          {%- if localization.available_countries.size > 1 -%}
-            <div class="loc__panel">
-              {%- form 'localization', id: 'HeaderCountry' -%}
-                {%- for country in localization.available_countries -%}
-                  <button class="loc__opt" type="submit" name="country_code" value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} aria-current="true"{% endif %}>
+          <div class="loc__panel">
+            {%- form 'localization', id: 'HeaderCountry' -%}
+              {%- for country in localization.available_countries -%}
+                {%- if country.iso_code != localization.country.iso_code -%}
+                  <button class="loc__opt" type="submit" name="country_code" value="{{ country.iso_code }}">
                     <span>{{ country.name }}</span><span>{{ country.currency.iso_code }}</span>
                   </button>
-                {%- endfor -%}
-              {%- endform -%}
-            </div>
-          {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endform -%}
+          </div>
         </details>
+      {%- elsif localization.available_countries.size == 1 -%}
+        <span class="hpill hide-sm" style="cursor:default"><span class="hpill__code">{{ localization.country.currency.iso_code }}</span></span>
       {%- endif -%}
 
-      {%- if localization.available_languages.size > 0 -%}
+      {%- comment -%} Language: the button names the OTHER language (Arabic page -> "English", English page -> "العربية"). {%- endcomment -%}
+      {%- assign other_langs = localization.available_languages.size | minus: 1 -%}
+      {%- if other_langs == 1 -%}
+        {%- form 'localization', id: 'HeaderLanguage', class: 'hide-sm' -%}
+          {%- for language in localization.available_languages -%}
+            {%- if language.iso_code != localization.language.iso_code -%}
+              <button class="hpill" type="submit" name="language_code" value="{{ language.iso_code }}">
+                {% render 'icon', name: 'globe' %}<span lang="{{ language.iso_code }}">{{ language.endonym_name }}</span>
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endform -%}
+      {%- elsif other_langs > 1 -%}
         <details class="loc hide-sm">
-          <summary class="hpill">
-            {% render 'icon', name: 'globe' %}<span>{{ localization.language.endonym_name }}</span>
-          </summary>
-          {%- if localization.available_languages.size > 1 -%}
-            <div class="loc__panel">
-              {%- form 'localization', id: 'HeaderLanguage' -%}
-                {%- for language in localization.available_languages -%}
-                  <button class="loc__opt" type="submit" name="language_code" value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} aria-current="true"{% endif %}>
-                    <span>{{ language.endonym_name }}</span>
-                  </button>
-                {%- endfor -%}
-              {%- endform -%}
-            </div>
-          {%- endif -%}
+          <summary class="hpill">{% render 'icon', name: 'globe' %}<span>{{ localization.language.endonym_name }}</span>{% render 'icon', name: 'chevron' %}</summary>
+          <div class="loc__panel">
+            {%- form 'localization', id: 'HeaderLanguage' -%}
+              {%- for language in localization.available_languages -%}
+                {%- if language.iso_code != localization.language.iso_code -%}
+                  <button class="loc__opt" type="submit" name="language_code" value="{{ language.iso_code }}"><span lang="{{ language.iso_code }}">{{ language.endonym_name }}</span></button>
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endform -%}
+          </div>
         </details>
       {%- endif -%}
 
