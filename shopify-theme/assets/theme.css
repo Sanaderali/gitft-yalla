@@ -531,3 +531,9 @@ body.drawer-open{overflow:hidden}
   .header__row:has(.header__search:focus-within) .citypill .csel__btn{color:transparent;pointer-events:none}
   .header__row:has(.header__search:focus-within) .citypill__caret{opacity:0}
 }
+
+/* ---- v3.4: rails are looped + draggable ---- */
+.rail__track{cursor:grab}
+.rail__track.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+.rail__track.is-dragging a{pointer-events:none}
+.rail__track img{-webkit-user-drag:none}

@@ -113,16 +113,120 @@
   /* ---------- auto-submit filter/sort forms ---------- */
   $$('form[data-autosubmit]').forEach((f) => f.addEventListener('change', () => f.submit()));
 
-  /* ---------- horizontal rails ---------- */
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-rail-prev],[data-rail-next]');
-    if (!btn) return;
-    const track = $('.rail__track', btn.closest('[data-rail]'));
+  /* ---------- rails: infinite loop, mouse/touch drag, arrows, gentle auto-advance ---------- */
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const railInstances = [];
+  const rebuildRails = () => railInstances.forEach((r) => r.rebuild());
+  const AUTOPLAY_MS = 3600;
+
+  function initRail(rail) {
+    const track = $('.rail__track', rail);
     if (!track) return;
-    const rtl = getComputedStyle(track).direction === 'rtl' ? -1 : 1;
-    const dir = btn.hasAttribute('data-rail-next') ? 1 : -1;
-    track.scrollBy({ left: dir * rtl * track.clientWidth * 0.8, behavior: 'smooth' });
-  });
+    const rtl = () => (getComputedStyle(track).direction === 'rtl' ? -1 : 1);
+    let setW = 0, looping = false, mouseDown = false, touching = false, dragged = false, lastTouch = 0, idleT = 0, inView = true, hover = false;
+
+    // horizontal position of an item inside the scrolling content (works for LTR + RTL)
+    const edge = (el) => {
+      const t = track.getBoundingClientRect(), r = el.getBoundingClientRect();
+      return rtl() === 1 ? r.left - t.left + track.scrollLeft : t.right - r.right - track.scrollLeft;
+    };
+    const pos = () => rtl() * track.scrollLeft;
+    const setPos = (x) => { track.scrollLeft = rtl() * x; };
+    const originals = () => [...track.children].filter((el) => !el.dataset.clone);
+
+    function teardown() {
+      [...track.children].forEach((el) => { if (el.dataset.clone) el.remove(); });
+      track.style.scrollSnapType = '';
+      looping = false;
+    }
+    function build() {
+      teardown();
+      const vis = originals().filter((el) => el.offsetParent !== null);   // skips cards hidden by the city filter
+      if (!vis.length || track.clientWidth === 0) return;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      const last = vis[vis.length - 1];
+      setW = edge(last) + last.offsetWidth + gap - edge(vis[0]);
+      if (setW <= track.clientWidth + 4) return;                         // everything fits: nothing to loop
+      const copy = () => originals().map((el) => {
+        const c = el.cloneNode(true);
+        c.dataset.clone = '1'; c.setAttribute('aria-hidden', 'true');
+        c.querySelectorAll('a,button,input,select,textarea').forEach((x) => { x.tabIndex = -1; });
+        return c;
+      });
+      track.prepend(...copy(), ...copy());
+      track.append(...copy(), ...copy());
+      track.style.scrollSnapType = 'none';
+      looping = true;
+      setPos(edge(vis[0]) - (parseFloat(getComputedStyle(track).paddingInlineStart) || 0));
+      paintWish();
+    }
+    // after movement stops, silently jump by whole sets so we never reach either end
+    function normalize() {
+      if (!looping || mouseDown || touching) return;
+      const low = 1.5 * setW; const p = pos();
+      const np = low + ((((p - low) % setW) + setW) % setW);
+      if (Math.abs(np - p) >= 1) setPos(np);
+    }
+    track.addEventListener('scroll', () => { clearTimeout(idleT); idleT = setTimeout(normalize, 140); }, { passive: true });
+
+    // --- drag with a mouse (touch already scrolls natively)
+    let sx = 0, sp = 0;
+    track.addEventListener('pointerdown', (e) => {
+      lastTouch = Date.now();
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      mouseDown = true; dragged = false; sx = e.clientX; sp = pos();
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!mouseDown) return;
+      const dx = e.clientX - sx;
+      if (!dragged && Math.abs(dx) > 5) { dragged = true; track.classList.add('is-dragging'); }
+      if (dragged) setPos(sp - rtl() * dx);
+    });
+    window.addEventListener('pointerup', () => {
+      if (!mouseDown) return;
+      mouseDown = false; track.classList.remove('is-dragging'); lastTouch = Date.now();
+      setTimeout(normalize, 160);
+    });
+    track.addEventListener('click', (e) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } }, true);
+    track.addEventListener('touchstart', () => { touching = true; lastTouch = Date.now(); }, { passive: true });
+    track.addEventListener('touchend', () => { touching = false; lastTouch = Date.now(); clearTimeout(idleT); idleT = setTimeout(normalize, 400); }, { passive: true });
+    track.addEventListener('touchcancel', () => { touching = false; }, { passive: true });
+    rail.addEventListener('mouseenter', () => { hover = true; });
+    rail.addEventListener('mouseleave', () => { hover = false; });
+    rail.addEventListener('focusin', () => { lastTouch = Date.now(); });
+
+    // --- gentle auto-advance by one card; pauses while you interact or when the row is off-screen
+    function step(dirn) {
+      const vis = [...track.children].filter((el) => el.offsetParent !== null);
+      const w = vis.length > 1 ? Math.abs(edge(vis[1]) - edge(vis[0])) : track.clientWidth * 0.8;
+      track.scrollBy({ left: dirn * rtl() * (w || track.clientWidth * 0.8), behavior: 'smooth' });
+    }
+    if ('IntersectionObserver' in window) new IntersectionObserver((en) => { inView = en[0].isIntersecting; }).observe(rail);
+    if (!reduceMotion) {
+      setInterval(() => {
+        if (!looping || !inView || hover || mouseDown || touching || document.hidden) return;
+        if (Date.now() - lastTouch < AUTOPLAY_MS * 1.5) return;
+        step(1);
+      }, AUTOPLAY_MS);
+    }
+
+    // --- arrows
+    rail.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-rail-prev],[data-rail-next]');
+      if (!btn) return;
+      lastTouch = Date.now();
+      track.scrollBy({ left: (btn.hasAttribute('data-rail-next') ? 1 : -1) * rtl() * track.clientWidth * 0.8, behavior: 'smooth' });
+    });
+
+    // build as soon as the row has a width (tab panels are hidden at first) and again on resize
+    let lastW = 0;
+    const instance = { rebuild() { const keep = looping; build(); if (!keep && !looping) return; } };
+    railInstances.push(instance);
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => { const w = track.clientWidth; if (w !== lastW) { lastW = w; build(); } }).observe(track);
+    } else build();
+  }
+  $$('[data-rail]').forEach(initRail);
 
   /* ---------- tabs ---------- */
   $$('[data-tabs]').forEach((wrap) => {
@@ -189,6 +293,7 @@
   function applyCity(city) {
     const slug = slugify(city);
     if (slug) document.documentElement.setAttribute('data-city', slug); else document.documentElement.removeAttribute('data-city');
+    rebuildRails();
     // hide whole rows/sections when none of their products are sold in this city
     $$('main .section').forEach((sec) => {
       const cards = $$('.pcard', sec);
