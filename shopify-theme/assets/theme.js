@@ -322,6 +322,27 @@
   pills.forEach((p) => { p.value = savedCity; p.addEventListener('change', () => setCity(p.value, p)); });
   applyCity(savedCity);
 
+  /* ---------- header search (phones): tapping the field OR the round button expands it ---------- */
+  (function () {
+    const row = $('.header__row'), form = $('.header__search');
+    if (!row || !form) return;
+    const input = $('input[type="search"]', form);
+    const set = (on) => row.classList.toggle('is-searching', on);
+    input.addEventListener('focus', () => set(true));
+    input.addEventListener('keydown', (e) => { if (e.key === 'Escape') input.blur(); });
+    // iOS never focuses buttons on tap, so handle the round button ourselves: empty field -> expand, not submit
+    form.addEventListener('click', (e) => {
+      if (e.target.closest('.search-go') && !input.value.trim()) { e.preventDefault(); input.focus(); set(true); }
+    });
+    form.addEventListener('submit', (e) => { if (!input.value.trim()) { e.preventDefault(); input.focus(); } });
+    // tapping anywhere else closes it again (iOS does not blur inputs on outside taps)
+    document.addEventListener('pointerdown', (e) => {
+      if (!row.classList.contains('is-searching') || form.contains(e.target)) return;
+      input.blur(); set(false);
+    });
+    input.addEventListener('blur', () => setTimeout(() => { if (!form.contains(document.activeElement)) set(false); }, 120));
+  })();
+
   /* ================= DELIVERY ================= */
   if (!CFG) return;
   const DAY = 864e5, HOUR = 36e5;

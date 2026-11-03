@@ -522,15 +522,20 @@ body.drawer-open{overflow:hidden}
 .csel__opt.is-placeholder.is-selected{color:color-mix(in srgb,var(--c-ink) 52%,transparent);font-weight:400}
 .csel__opt.is-placeholder.is-selected::after{display:none}
 
-/* ---- v3.3: phones: tapping search collapses the city button to its flag and gives search the full width ---- */
+/* ---- v3.3: phones: opening search collapses the city button to its flag and gives search the full width (smooth) ---- */
 @media (max-width:989px){
-  .citypill{flex:none;max-width:230px;overflow:hidden;transition:max-width .32s cubic-bezier(.22,1,.36,1)}
-  .citypill .csel__btn{min-width:132px}
-  .header__search{transition:box-shadow .2s}
-  .header__row:has(.header__search:focus-within) .citypill{max-width:44px}
-  .header__row:has(.header__search:focus-within) .citypill .csel__btn{color:transparent;pointer-events:none}
-  .header__row:has(.header__search:focus-within) .citypill__caret{opacity:0}
+  .citypill{flex:none;max-width:230px;overflow:hidden;transition:max-width .4s cubic-bezier(.22,1,.36,1),box-shadow .3s}
+  .citypill .csel__btn{min-width:132px;transition:color .2s ease}
+  .citypill__caret{transition:opacity .2s ease}
+  .header__search{transition:box-shadow .3s ease,transform .3s ease}
+  .search-go{transition:transform .35s cubic-bezier(.22,1,.36,1),background .2s}
+  .header__row.is-searching .citypill{max-width:44px}
+  .header__row.is-searching .citypill .csel__btn{color:transparent;pointer-events:none}
+  .header__row.is-searching .citypill__caret{opacity:0}
+  .header__row.is-searching .header__search{box-shadow:0 0 0 3px color-mix(in srgb,var(--c-primary) 22%,transparent),0 10px 24px -10px rgba(108,59,245,.5)}
+  .header__row.is-searching .search-go{transform:scale(1.06)}
 }
+@media (prefers-reduced-motion:reduce){.citypill,.citypill .csel__btn,.citypill__caret,.header__search,.search-go{transition:none!important}}
 
 /* ---- v3.4: rails are looped + draggable ---- */
 .rail__track{cursor:grab}
