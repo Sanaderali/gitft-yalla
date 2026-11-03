@@ -468,3 +468,28 @@ body.drawer-open{overflow:hidden}
 .btn.is-unavailable{opacity:.5;cursor:not-allowed;box-shadow:none}
 .header__search input[type=search],.qty input[type=number],.news .field-row input[type=email]{box-shadow:none;border:0;background:transparent}
 .news .field-row input[type=email]{background:#fff}
+
+/* ---- v3.1: date row scrolls on phones + calendar ---- */
+.pdp__grid{grid-template-columns:minmax(0,1fr)}
+.pdp__grid>*,.pdp__info,.pdp__form,.dpick,.dpick .field{min-width:0}
+.chips--scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity;touch-action:pan-x pan-y;margin-inline:-4px;padding-inline:4px;padding-block:4px 10px}
+.chips--scroll .chipbtn{flex:none;scroll-snap-align:start}
+.chipbtn--more{border:1.5px dashed color-mix(in srgb,var(--c-primary) 55%,transparent);background:var(--c-soft);color:var(--c-primary);box-shadow:none}
+.chipbtn--more .icon{font-size:17px}
+.chipbtn--more small{opacity:1;font-weight:700}
+@media (min-width:990px){.pdp__grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+
+.cal{width:min(94vw,380px)}
+.cal__title{font-size:18px;margin-block-end:12px;padding-inline-end:40px}
+.cal__nav{display:flex;align-items:center;justify-content:space-between;margin-block-end:8px}
+.cal__nav b{font-size:16px}
+.cal__nav button{display:grid;place-items:center;width:38px;height:38px;border:0;border-radius:50%;background:var(--c-soft);color:var(--c-primary);font-size:22px;line-height:1}
+.cal__nav button:disabled{opacity:.35}
+.is-rtl .cal__nav button{transform:scaleX(-1)}
+.cal__dow,.cal__grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal__dow span{font-size:12px;font-weight:700;color:color-mix(in srgb,var(--c-ink) 55%,transparent);padding-block:6px}
+.cal__day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;font-size:15px;font-weight:600;color:var(--c-ink)}
+.cal__day:not(:disabled):hover{background:var(--c-soft)}
+.cal__day:disabled{opacity:.3;cursor:not-allowed}
+.cal__day.is-today{box-shadow:inset 0 0 0 2px var(--c-sun)}
+.cal__day.is-selected{background:var(--c-primary);color:#fff;box-shadow:0 8px 18px -8px var(--c-primary)}

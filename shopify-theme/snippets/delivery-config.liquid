@@ -13,7 +13,7 @@
     "locale": {{ request.locale.iso_code | json }},
     "tz": {{ tz }},
     "cutoff": {{ settings.delivery_cutoff_hours | default: 2 }},
-    "days": {{ settings.delivery_days_ahead | default: 14 }},
+    "days": {{ settings.delivery_days_ahead | default: 30 }},
     "cities": [
       {%- assign first = true -%}
       {%- for line in city_lines -%}
@@ -50,6 +50,8 @@
       "chooseSlot": {{ 'delivery.error_slot' | t | json }},
       "expired": {{ 'delivery.expired' | t | json }},
       "today": {{ 'delivery.today' | t | json }},
+      "moreDates": {{ 'delivery.more_dates' | t | json }},
+      "pickDate": {{ 'delivery.pick_date' | t | json }},
       "tomorrow": {{ 'delivery.tomorrow' | t | json }},
       "closed": {{ 'delivery.closed' | t | json }},
       "noSlots": {{ 'delivery.no_slots' | t | json }}

@@ -62,7 +62,9 @@
     "cutoff_note": "Windows close {{ hours }}h before they start.",
     "change": "Change",
     "save": "Save",
-    "line_label": "Delivery"
+    "line_label": "Delivery",
+    "more_dates": "More dates",
+    "pick_date": "Choose a delivery date"
   },
   "cart": {
     "title": "Your cart",

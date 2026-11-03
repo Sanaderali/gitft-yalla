@@ -142,11 +142,11 @@
       {
         "type": "range",
         "id": "delivery_days_ahead",
-        "label": "How many days ahead customers can book",
+        "label": "How many days ahead customers can book (first 7 days show as buttons, the rest in a calendar)",
         "min": 3,
-        "max": 30,
+        "max": 90,
         "step": 1,
-        "default": 14
+        "default": 30
       },
       {
         "type": "text",

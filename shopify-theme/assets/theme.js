@@ -186,7 +186,10 @@
       if (autoPick && !this.date) { const first = dates.find((d) => d.open); if (first) this.date = first.iso; }
       if (this.date && !dates.some((d) => d.iso === this.date && d.open)) { this.date = ''; this.slot = ''; }
       this.datesEl.innerHTML = '';
-      dates.forEach((d) => {
+      // first week as quick chips; anything later is picked from the calendar
+      const quick = dates.slice(0, 7);
+      const later = this.date && !quick.some((d) => d.iso === this.date) ? dates.find((d) => d.iso === this.date) : null;
+      const chip = (d) => {
         const b = document.createElement('button');
         b.type = 'button'; b.className = 'chipbtn' + (d.iso === this.date ? ' is-selected' : '');
         b.disabled = !d.open;
@@ -195,9 +198,65 @@
         b.firstChild.textContent = top; b.lastChild.textContent = fmtDate(d.dt, { day: 'numeric', month: 'short' });
         b.addEventListener('click', () => { this.date = d.iso; this.slot = ''; this.error(''); this.render(false); this.sync(); });
         this.datesEl.appendChild(b);
-      });
+      };
+      quick.forEach(chip);
+      if (later) chip(later);
+      if (dates.length > quick.length) {
+        const m = document.createElement('button');
+        m.type = 'button'; m.className = 'chipbtn chipbtn--more';
+        m.innerHTML = '<i class="icon fa-solid fa-calendar-days" aria-hidden="true"></i><small></small>';
+        m.lastChild.textContent = CFG.i18n.moreDates;
+        m.addEventListener('click', () => this.openCalendar());
+        this.datesEl.appendChild(m);
+      }
       this.renderSlots();
       this.sync();
+    }
+    /* month calendar for the whole booking window */
+    openCalendar() {
+      if (!this.cal) this.buildCalendar();
+      const t = this.date ? new Date(this.date + 'T00:00:00Z') : new Date(todayUTC());
+      this.calY = t.getUTCFullYear(); this.calM = t.getUTCMonth();
+      this.paintCalendar();
+      this.cal.showModal();
+    }
+    buildCalendar() {
+      const dlg = document.createElement('dialog');
+      dlg.className = 'dlg cal';
+      dlg.innerHTML = '<div class="dlg__body"><button type="button" class="icon-btn dlg__close" data-x aria-label="Close"><i class="icon fa-solid fa-xmark" aria-hidden="true"></i></button>' +
+        '<h3 class="cal__title"></h3><div class="cal__nav"><button type="button" data-prev aria-label="Previous month">‹</button><b data-month></b><button type="button" data-next aria-label="Next month">›</button></div>' +
+        '<div class="cal__dow"></div><div class="cal__grid"></div></div>';
+      $('.cal__title', dlg).textContent = CFG.i18n.pickDate;
+      // week starts on Sunday (Saudi Arabia)
+      const dow = $('.cal__dow', dlg);
+      for (let i = 0; i < 7; i++) { const sp = document.createElement('span'); sp.textContent = fmtDate(Date.UTC(2023, 0, 1 + i), { weekday: 'narrow' }); dow.appendChild(sp); }
+      $('[data-x]', dlg).addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+      $('[data-prev]', dlg).addEventListener('click', () => { this.calM--; if (this.calM < 0) { this.calM = 11; this.calY--; } this.paintCalendar(); });
+      $('[data-next]', dlg).addEventListener('click', () => { this.calM++; if (this.calM > 11) { this.calM = 0; this.calY++; } this.paintCalendar(); });
+      this.root.appendChild(dlg);
+      this.cal = dlg;
+    }
+    paintCalendar() {
+      const all = dateList(); const byIso = new Map(all.map((d) => [d.iso, d]));
+      const first = new Date(all[0].dt), last = new Date(all[all.length - 1].dt);
+      const y = this.calY, m = this.calM;
+      $('[data-month]', this.cal).textContent = fmtDate(Date.UTC(y, m, 1), { month: 'long', year: 'numeric' });
+      $('[data-prev]', this.cal).disabled = y * 12 + m <= first.getUTCFullYear() * 12 + first.getUTCMonth();
+      $('[data-next]', this.cal).disabled = y * 12 + m >= last.getUTCFullYear() * 12 + last.getUTCMonth();
+      const grid = $('.cal__grid', this.cal); grid.innerHTML = '';
+      const lead = new Date(Date.UTC(y, m, 1)).getUTCDay(), days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+      for (let i = 0; i < lead; i++) grid.appendChild(document.createElement('span'));
+      for (let day = 1; day <= days; day++) {
+        const iso = new Date(Date.UTC(y, m, day)).toISOString().slice(0, 10);
+        const d = byIso.get(iso);
+        const b = document.createElement('button');
+        b.type = 'button'; b.textContent = fmtDate(Date.UTC(y, m, day), { day: 'numeric' });
+        b.className = 'cal__day' + (iso === this.date ? ' is-selected' : '') + (d && d.i === 0 ? ' is-today' : '');
+        b.disabled = !d || !d.open;
+        b.addEventListener('click', () => { this.date = iso; this.slot = ''; this.error(''); this.cal.close(); this.render(false); this.sync(); });
+        grid.appendChild(b);
+      }
     }
     renderSlots() {
       this.slotsEl.innerHTML = '';
