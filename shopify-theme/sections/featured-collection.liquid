@@ -1,4 +1,9 @@
-{%- assign col = section.settings.collection -%}
+{%- liquid
+  assign col = section.settings.collection
+  if col == blank or col.products.size == 0
+    assign col = collections['all']
+  endif
+-%}
 <section class="section section--{{ section.settings.background }}">
   <div class="container">
     <div class="section__head">

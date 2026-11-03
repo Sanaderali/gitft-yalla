@@ -35,7 +35,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    {%- capture font_url -%}https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800{% if is_rtl %}&family=Cairo:wght@400;700{% endif %}&display=swap{%- endcapture -%}
+    {%- capture font_url -%}https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800{% if is_rtl %}&family=Cairo:wght@400;500;700{% endif %}&display=swap{%- endcapture -%}
     {%- comment -%} Non-blocking font load: text shows immediately in the fallback font, then swaps. {%- endcomment -%}
     <link rel="stylesheet" href="{{ font_url }}" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="{{ font_url }}"></noscript>

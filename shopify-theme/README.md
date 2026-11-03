@@ -18,7 +18,16 @@ To push it to a store as a normal theme: `shopify theme push --path alanfaldoc/s
 
 1. **Products**: admin → Products → Import → upload `seed/products.csv` (47 gifts, tagged by category/occasion, no images yet; the theme shows an emoji tile until you upload photos). Regenerate with `node seed/build-products-csv.mjs`.
 2. **Collections** (tag-based, automatic): Option 1, create them by hand in Products → Collections → Create collection → *Automated*, with the condition `Product tag is equal to <tag>` (list in `seed/create-collections.mjs`). Option 2, run `node seed/create-collections.mjs` with an Admin API token (instructions at the top of that file).
-3. **Navigation** (Content → Menus → *Main menu*), up to 3 levels shows as a mega menu:
+3. **Navigation** (Online Store → Navigation → *Main menu*), matches the header design. Suggested structure (each top item with its children as a dropdown):
+   - Birthday → Birthday, Gifts for Her, Gifts for Him, Kids Cakes
+   - Gift Sets → Gift Sets, Flowers & Chocolates, Gifts for Her, Gifts for Him
+   - Flowers → Flowers, Flowers & Chocolates, Best Sellers
+   - Cakes → Cakes, Kids Cakes
+   - Perfumes → Perfumes, Gifts for Her, Gifts for Him
+   - More Gifts → Chocolates, Jewellery, Balloons, New Arrivals
+   - Occasions → Anniversary, Love, Graduation, New Born, Get Well Soon, Wedding
+   - Personalised → Personalised
+   Older notes: (Content → Menus → *Main menu*), up to 3 levels shows as a mega menu:
    - Birthday · Gift Sets · Flowers · Cakes · Chocolates · Perfumes · Jewellery
    - Occasions → Anniversary, Love, Graduation, New Born, Get Well Soon, Wedding
    - Gifts → Gifts for Her, Gifts for Him, Personalised

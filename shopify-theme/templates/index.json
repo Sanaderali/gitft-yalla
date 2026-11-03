@@ -148,15 +148,15 @@
     "categories": {
       "type": "collection-carousel",
       "settings": {
-        "heading": "Gifts by category",
+        "heading": "Shop by category",
         "shape": "arch"
       },
       "blocks": {
         "b1": {
           "type": "collection",
           "settings": {
-            "collection": "new-arrivals",
-            "emoji": "✨"
+            "collection": "birthday",
+            "emoji": "🎂"
           }
         },
         "b2": {
@@ -183,15 +183,15 @@
         "b5": {
           "type": "collection",
           "settings": {
-            "collection": "chocolates",
-            "emoji": "🍫"
+            "collection": "perfumes",
+            "emoji": "🧴"
           }
         },
         "b6": {
           "type": "collection",
           "settings": {
-            "collection": "perfumes",
-            "emoji": "🧴"
+            "collection": "chocolates",
+            "emoji": "🍫"
           }
         },
         "b7": {
@@ -204,8 +204,8 @@
         "b8": {
           "type": "collection",
           "settings": {
-            "collection": "balloons",
-            "emoji": "🎈"
+            "collection": "personalised",
+            "emoji": "✨"
           }
         }
       },

@@ -16,11 +16,13 @@
     </div>
 
     {%- for block in section.blocks -%}
+      {%- assign tab_col = block.settings.collection -%}
+      {%- if tab_col == blank or tab_col.products.size == 0 -%}{%- assign tab_col = collections['all'] -%}{%- endif -%}
       <div class="tabpanel{% unless forloop.first %} is-hidden{% endunless %}" data-panel="{{ block.id }}" role="tabpanel">
         <div class="rail" data-rail>
           <button type="button" class="rail__btn rail__btn--prev" data-rail-prev aria-label="Previous">{% render 'icon', name: 'arrow-left' %}</button>
           <ul class="rail__track rail__track--cards">
-            {%- for product in block.settings.collection.products limit: 8 -%}
+            {%- for product in tab_col.products limit: 8 -%}
               <li class="pcard-wrap">{% render 'product-card', product: product %}</li>
             {%- else -%}
               <li class="muted">—</li>
