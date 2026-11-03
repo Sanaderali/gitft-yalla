@@ -343,6 +343,55 @@
     input.addEventListener('blur', () => setTimeout(() => { if (!form.contains(document.activeElement)) set(false); }, 120));
   })();
 
+  /* ---------- scroll motion (every page): content eases in on scroll down AND up; header hides on down, returns on up ---------- */
+  (function () {
+    if (reduceMotion) return;
+    const header = $('.header');
+
+    // 1) header: slide away while reading down, slide back as soon as you scroll up
+    if (header) {
+      let lastY = window.scrollY, ticking = false;
+      const keepOpen = () => header.querySelector('details[open]') || header.matches(':focus-within') || $('.header__row.is-searching') || $('.drawer.is-open') || $('.csel__list');
+      const update = () => {
+        ticking = false;
+        const y = window.scrollY, dy = y - lastY;
+        if (y < 90 || dy < -6 || keepOpen()) header.classList.remove('is-hidden');
+        else if (dy > 6) { header.classList.add('is-hidden'); header.querySelectorAll('details[open]').forEach((d) => d.removeAttribute('open')); }
+        if (Math.abs(dy) > 6 || y < 90) lastY = y;
+      };
+      window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    }
+
+    // 2) reveal: fade + rise in, with a small stagger between neighbours, replayed in both scroll directions
+    if (!('IntersectionObserver' in window)) return;
+    const TARGETS = [
+      'main .section__head', 'main .pagehead', 'main .crumbs', 'main .rail', 'main .hero__main', 'main .promo', 'main .usp__item',
+      'main .banner', 'main .news', 'main .gallery', 'main .pdp__info', 'main .cart__items > *', 'main .cart__summary',
+      'main .grid > li', 'main .trust li', 'main .empty', 'main .rte', '.footer__brand', '.footer__col'
+    ].join(',');
+    const els = $$(TARGETS).filter((el) => !el.closest('.rail__track'));
+    const groupIndex = new Map();
+    els.forEach((el) => {
+      const sib = groupIndex.get(el.parentNode) || 0; groupIndex.set(el.parentNode, sib + 1);
+      el.style.setProperty('--rd', Math.min(sib, 7) * 70 + 'ms');
+      el.setAttribute('data-reveal', ''); el.setAttribute('data-dir', 'down');
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.95 && r.bottom > 0) el.classList.add('in');       // already on screen at load: no flash
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        const el = en.target;
+        if (en.isIntersecting) { el.classList.add('in'); }
+        else {
+          // left the screen: reset (off-screen) so it can animate again; remember which side it will return from
+          el.setAttribute('data-dir', en.boundingClientRect.top < 0 ? 'up' : 'down');
+          el.classList.remove('in');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    els.forEach((el) => io.observe(el));
+  })();
+
   /* ================= DELIVERY ================= */
   if (!CFG) return;
   const DAY = 864e5, HOUR = 36e5;
