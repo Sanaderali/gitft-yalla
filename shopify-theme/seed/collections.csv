@@ -1,0 +1,24 @@
+Title,Handle,Type,Condition (Product tag is equal to)
+Birthday,birthday,Automated,birthday
+Anniversary,anniversary,Automated,anniversary
+Love,love,Automated,love
+Graduation,graduation,Automated,graduation
+New Born,new-born,Automated,new-born
+Get Well Soon,get-well-soon,Automated,get-well-soon
+Wedding,wedding,Automated,wedding
+Flowers,flowers,Automated,flowers
+Cakes,cakes,Automated,cakes
+Chocolates,chocolates,Automated,chocolates
+Gift Sets,gift-sets,Automated,gift-sets
+Perfumes,perfumes,Automated,perfumes
+Jewellery,jewellery,Automated,jewellery
+Balloons,balloons,Automated,balloons
+Personalised,personalised,Automated,personalised
+Best Sellers,best-sellers,Automated,best-seller
+New Arrivals,new-arrivals,Automated,new
+Same Day Delivery,same-day-delivery,Automated,same-day
+Flowers & Chocolates,flowers-and-chocolates,Automated,flowers-chocolates
+Gifts for Her,gifts-for-her,Automated,for-her
+Gifts for Him,gifts-for-him,Automated,for-him
+Kids Cakes,kids-cakes,Automated,kids
+Add-ons,add-ons,Automated,add-ons
