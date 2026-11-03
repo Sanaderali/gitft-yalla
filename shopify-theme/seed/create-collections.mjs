@@ -17,11 +17,19 @@ async function getToken() {
   if (TOKEN) return TOKEN;
   if (!CLIENT_ID || !CLIENT_SECRET) { console.error('Set TOKEN, or CLIENT_ID + CLIENT_SECRET'); process.exit(1); }
   const res = await fetch(`https://${SHOP}/admin/oauth/access_token`, {
-    method: 'POST', headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ client_id: CLIENT_ID, client_secret: CLIENT_SECRET, grant_type: 'client_credentials' })
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+    body: new URLSearchParams({ client_id: CLIENT_ID, client_secret: CLIENT_SECRET, grant_type: 'client_credentials' })
   });
-  const j = await res.json();
-  if (!j.access_token) { console.error('Could not get a token:', j); process.exit(1); }
+  const text = await res.text();
+  let j = {};
+  try { j = JSON.parse(text); } catch { /* not JSON */ }
+  if (!j.access_token) {
+    console.error(`Could not get a token (HTTP ${res.status}).`);
+    console.error(text.slice(0, 300).replace(/\s+/g, ' '));
+    console.error('Check: SHOP is exactly your .myshopify.com address, the app is INSTALLED on that store, and the app + store are in the same organisation.');
+    process.exit(1);
+  }
   return j.access_token;
 }
 
