@@ -88,7 +88,7 @@
       {%- else -%}
         <span class="citypill__ico">{% render 'icon', name: 'pin' %}</span>
       {%- endif -%}
-      <select data-city-pill aria-label="{{ 'general.deliver_to' | t }}">
+      <select data-city-pill data-csel aria-label="{{ 'general.deliver_to' | t }}">
         <option value="">{{ 'delivery.choose_city' | t }}</option>
         {%- assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />' -%}
         {%- for line in city_lines -%}

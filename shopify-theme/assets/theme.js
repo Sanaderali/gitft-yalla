@@ -13,6 +13,85 @@
   const cfgEl = $('#delivery-config');
   const CFG = cfgEl ? JSON.parse(cfgEl.textContent) : null;
 
+  /* ---------- custom select (styled dropdown / mobile bottom sheet). The real <select> stays in the form. ---------- */
+  const valueDesc = Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value');
+  function enhanceSelect(sel) {
+    const btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'csel__btn';
+    btn.setAttribute('aria-haspopup', 'listbox'); btn.setAttribute('aria-expanded', 'false');
+    const txt = document.createElement('span'); txt.className = 'csel__txt'; btn.appendChild(txt);
+    sel.after(btn); sel.hidden = true; sel.tabIndex = -1;
+    let panel = null, scrim = null, active = -1;
+    const refresh = () => { const o = sel.options[sel.selectedIndex]; txt.textContent = o ? o.textContent : ''; btn.classList.toggle('is-empty', !sel.value); };
+    // programmatic `select.value = ...` (saved city, other pickers) must update the button too
+    Object.defineProperty(sel, 'value', { get() { return valueDesc.get.call(this); }, set(v) { valueDesc.set.call(this, v); refresh(); } });
+    refresh();
+
+    const setActive = (i) => {
+      if (!panel) return;
+      const items = $$('.csel__opt', panel); active = Math.max(0, Math.min(items.length - 1, i));
+      items.forEach((li, n) => li.classList.toggle('is-active', n === active));
+      items[active].scrollIntoView({ block: 'nearest' });
+    };
+    const choose = (i) => {
+      const o = sel.options[i]; if (!o) return;
+      sel.value = o.value; sel.dispatchEvent(new Event('change', { bubbles: true }));
+      close(); btn.focus();
+    };
+    const onKey = (e) => {
+      if (e.key === 'Escape') { e.preventDefault(); close(); btn.focus(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); setActive(active + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(active - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+      else if (e.key === 'End') { e.preventDefault(); setActive(1e3); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(active); }
+      else if (e.key === 'Tab') close();
+    };
+    const onScroll = (e) => { if (panel && !panel.contains(e.target)) close(); };
+    function close() {
+      if (!panel) return;
+      panel.remove(); if (scrim) scrim.remove(); panel = scrim = null;
+      btn.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('keydown', onKey, true);
+      window.removeEventListener('resize', close); window.removeEventListener('scroll', onScroll, true);
+    }
+    function open() {
+      if (panel) return close();
+      const sheet = window.matchMedia('(max-width: 640px)').matches;
+      panel = document.createElement('ul');
+      panel.className = 'csel__list' + (sheet ? ' is-sheet' : ''); panel.setAttribute('role', 'listbox');
+      const label = (btn.closest('label') && btn.closest('label').getAttribute('title')) || sel.getAttribute('aria-label') || '';
+      if (sheet && label) { const h = document.createElement('li'); h.className = 'csel__title'; h.setAttribute('role', 'presentation'); h.textContent = label; panel.appendChild(h); }
+      [...sel.options].forEach((o, i) => {
+        const li = document.createElement('li');
+        li.className = 'csel__opt' + (o.value === '' ? ' is-placeholder' : '') + (i === sel.selectedIndex ? ' is-selected' : '');
+        li.setAttribute('role', 'option'); li.setAttribute('aria-selected', i === sel.selectedIndex);
+        li.textContent = o.textContent;
+        li.addEventListener('click', () => choose(i));
+        panel.appendChild(li);
+      });
+      if (sheet) { scrim = document.createElement('div'); scrim.className = 'csel__scrim'; scrim.addEventListener('click', close); document.body.appendChild(scrim); }
+      document.body.appendChild(panel);
+      if (!sheet) {
+        const r = btn.getBoundingClientRect(); const w = Math.max(r.width, 230);
+        panel.style.minWidth = w + 'px';
+        const h = panel.offsetHeight;
+        const below = window.innerHeight - r.bottom - 12;
+        panel.style.top = (below >= Math.min(h, 240) ? r.bottom + 8 : Math.max(8, r.top - h - 8)) + 'px';
+        if (getComputedStyle(document.documentElement).direction === 'rtl') panel.style.right = Math.max(8, window.innerWidth - r.right) + 'px';
+        else panel.style.left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8)) + 'px';
+      }
+      btn.setAttribute('aria-expanded', 'true');
+      document.addEventListener('keydown', onKey, true);
+      window.addEventListener('resize', close); window.addEventListener('scroll', onScroll, true);
+      setActive(sel.selectedIndex);
+    }
+    btn.addEventListener('click', open);
+    btn.addEventListener('keydown', (e) => { if (e.key === 'ArrowDown' && !panel) { e.preventDefault(); open(); } });
+    document.addEventListener('click', (e) => { if (panel && !panel.contains(e.target) && !btn.contains(e.target)) close(); });
+  }
+  $$('select[data-csel]').forEach(enhanceSelect);
+
   /* ---------- drawer (class-based so it can slide) ---------- */
   const setDrawer = (el, open) => {
     el.classList.toggle('is-open', open);
