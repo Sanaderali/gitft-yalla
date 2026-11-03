@@ -1,0 +1,905 @@
+[
+ {
+  "handle": "blush-bloom-pink-bouquet",
+  "title": "Blush Bloom Pink Bouquet",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "best-seller",
+   "birthday",
+   "love",
+   "for-her"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "Standard",
+    "price": 195.0
+   },
+   {
+    "title": "Premium",
+    "price": 275.0
+   }
+  ]
+ },
+ {
+  "handle": "sweet-darling-100-red-roses",
+  "title": "Sweet Darling 100 Red Roses",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "best-seller",
+   "love",
+   "anniversary",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 799.0
+   }
+  ]
+ },
+ {
+  "handle": "white-lily-gift-bouquet",
+  "title": "White Lily Gift Bouquet",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "get-well-soon",
+   "anniversary"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "Standard",
+    "price": 259.0
+   },
+   {
+    "title": "Premium",
+    "price": 339.0
+   }
+  ]
+ },
+ {
+  "handle": "painted-skies-tulip-vase",
+  "title": "Painted Skies Tulip Vase",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "new",
+   "birthday",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 289.0
+   }
+  ]
+ },
+ {
+  "handle": "garden-grace-flower-bowl",
+  "title": "Garden Grace Flower Bowl",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "morning",
+   "birthday",
+   "get-well-soon"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 179.0
+   }
+  ]
+ },
+ {
+  "handle": "sunshine-gerbera-box",
+  "title": "Sunshine Gerbera Box",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "graduation",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 229.0
+   }
+  ]
+ },
+ {
+  "handle": "pastel-peony-bouquet",
+  "title": "Pastel Peony Bouquet",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "new",
+   "wedding",
+   "anniversary",
+   "for-her"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "Standard",
+    "price": 349.0
+   },
+   {
+    "title": "Premium",
+    "price": 429.0
+   }
+  ]
+ },
+ {
+  "handle": "little-joy-baby-bouquet",
+  "title": "Little Joy Baby Bouquet",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "new-born"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 219.0
+   }
+  ]
+ },
+ {
+  "handle": "dreamy-chocolate-drip-cake",
+  "title": "Dreamy Chocolate Drip Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "best-seller",
+   "birthday"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "500 g",
+    "price": 249.0
+   },
+   {
+    "title": "1 kg",
+    "price": 339.0
+   }
+  ]
+ },
+ {
+  "handle": "red-velvet-heart-cake",
+  "title": "Red Velvet Heart Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "love",
+   "anniversary"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "500 g",
+    "price": 229.0
+   },
+   {
+    "title": "1 kg",
+    "price": 319.0
+   }
+  ]
+ },
+ {
+  "handle": "strawberry-cloud-cake",
+  "title": "Strawberry Cloud Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "morning",
+   "birthday",
+   "get-well-soon"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "500 g",
+    "price": 219.0
+   },
+   {
+    "title": "1 kg",
+    "price": 309.0
+   }
+  ]
+ },
+ {
+  "handle": "biscoff-crunch-cake",
+  "title": "Biscoff Crunch Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "new",
+   "birthday"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "500 g",
+    "price": 259.0
+   },
+   {
+    "title": "1 kg",
+    "price": 349.0
+   }
+  ]
+ },
+ {
+  "handle": "dino-roar-kids-cake",
+  "title": "Dino Roar Kids Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "kids",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 289.0
+   }
+  ]
+ },
+ {
+  "handle": "bunny-buddy-kids-cake",
+  "title": "Bunny Buddy Kids Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "kids",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 289.0
+   }
+  ]
+ },
+ {
+  "handle": "starlight-princess-kids-cake",
+  "title": "Starlight Princess Kids Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "kids",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 299.0
+   }
+  ]
+ },
+ {
+  "handle": "graduation-cap-cake",
+  "title": "Graduation Cap Cake",
+  "type": "Cakes",
+  "tags": [
+   "cakes",
+   "same-day",
+   "graduation"
+  ],
+  "optionName": "Size",
+  "variants": [
+   {
+    "title": "500 g",
+    "price": 269.0
+   },
+   {
+    "title": "1 kg",
+    "price": 359.0
+   }
+  ]
+ },
+ {
+  "handle": "belgian-truffle-gift-box",
+  "title": "Belgian Truffle Gift Box",
+  "type": "Chocolates",
+  "tags": [
+   "chocolates",
+   "same-day",
+   "best-seller",
+   "love"
+  ],
+  "optionName": "Pieces",
+  "variants": [
+   {
+    "title": "12 pcs",
+    "price": 149.0
+   },
+   {
+    "title": "24 pcs",
+    "price": 219.0
+   }
+  ]
+ },
+ {
+  "handle": "dates-and-chocolate-tray",
+  "title": "Dates & Chocolate Tray",
+  "type": "Chocolates",
+  "tags": [
+   "chocolates",
+   "same-day",
+   "get-well-soon",
+   "wedding"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 189.0
+   }
+  ]
+ },
+ {
+  "handle": "pistachio-luxe-hamper",
+  "title": "Pistachio Luxe Hamper",
+  "type": "Chocolates",
+  "tags": [
+   "chocolates",
+   "same-day",
+   "new",
+   "anniversary"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 219.0
+   }
+  ]
+ },
+ {
+  "handle": "choco-bouquet",
+  "title": "Choco Bouquet",
+  "type": "Chocolates",
+  "tags": [
+   "chocolates",
+   "same-day",
+   "graduation",
+   "love",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 139.0
+   }
+  ]
+ },
+ {
+  "handle": "roses-and-truffles-combo",
+  "title": "Roses & Truffles Combo",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "best-seller",
+   "flowers-chocolates",
+   "chocolates",
+   "love",
+   "anniversary",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 349.0
+   }
+  ]
+ },
+ {
+  "handle": "tulips-and-pralines-box",
+  "title": "Tulips & Pralines Box",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "flowers-chocolates",
+   "chocolates",
+   "birthday",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 329.0
+   }
+  ]
+ },
+ {
+  "handle": "peach-blooms-and-chocolates",
+  "title": "Peach Blooms & Chocolates",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "morning",
+   "new",
+   "flowers-chocolates",
+   "chocolates",
+   "get-well-soon"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 299.0
+   }
+  ]
+ },
+ {
+  "handle": "sunflower-and-belgian-chocolate",
+  "title": "Sunflower & Belgian Chocolate",
+  "type": "Flowers",
+  "tags": [
+   "flowers",
+   "same-day",
+   "flowers-chocolates",
+   "chocolates",
+   "graduation"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 279.0
+   }
+  ]
+ },
+ {
+  "handle": "the-self-care-hamper",
+  "title": "The Self-Care Hamper",
+  "type": "Gift Sets",
+  "tags": [
+   "gift-sets",
+   "same-day",
+   "best-seller",
+   "for-her",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 299.0
+   }
+  ]
+ },
+ {
+  "handle": "the-gentlemans-treat-box",
+  "title": "The Gentleman's Treat Box",
+  "type": "Gift Sets",
+  "tags": [
+   "gift-sets",
+   "same-day",
+   "for-him",
+   "birthday",
+   "anniversary"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 329.0
+   }
+  ]
+ },
+ {
+  "handle": "baby-welcome-basket",
+  "title": "Baby Welcome Basket",
+  "type": "Gift Sets",
+  "tags": [
+   "gift-sets",
+   "same-day",
+   "new-born"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 359.0
+   }
+  ]
+ },
+ {
+  "handle": "movie-night-surprise-box",
+  "title": "Movie Night Surprise Box",
+  "type": "Gift Sets",
+  "tags": [
+   "gift-sets",
+   "same-day",
+   "new",
+   "for-him",
+   "for-her",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 199.0
+   }
+  ]
+ },
+ {
+  "handle": "just-because-box",
+  "title": "Just Because Box",
+  "type": "Gift Sets",
+  "tags": [
+   "gift-sets",
+   "same-day",
+   "love",
+   "for-her"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 169.0
+   }
+  ]
+ },
+ {
+  "handle": "midnight-oud-eau-de-parfum",
+  "title": "Midnight Oud Eau de Parfum",
+  "type": "Perfumes",
+  "tags": [
+   "perfumes",
+   "same-day",
+   "best-seller",
+   "for-him",
+   "birthday"
+  ],
+  "optionName": "Volume",
+  "variants": [
+   {
+    "title": "50 ml",
+    "price": 429.0
+   },
+   {
+    "title": "100 ml",
+    "price": 539.0
+   }
+  ]
+ },
+ {
+  "handle": "rose-petal-eau-de-parfum",
+  "title": "Rose Petal Eau de Parfum",
+  "type": "Perfumes",
+  "tags": [
+   "perfumes",
+   "same-day",
+   "for-her",
+   "anniversary"
+  ],
+  "optionName": "Volume",
+  "variants": [
+   {
+    "title": "50 ml",
+    "price": 399.0
+   },
+   {
+    "title": "100 ml",
+    "price": 509.0
+   }
+  ]
+ },
+ {
+  "handle": "citrus-splash-body-mist-set",
+  "title": "Citrus Splash Body Mist Set",
+  "type": "Perfumes",
+  "tags": [
+   "perfumes",
+   "same-day",
+   "new",
+   "for-her",
+   "graduation"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 159.0
+   }
+  ]
+ },
+ {
+  "handle": "initial-gold-pendant",
+  "title": "Initial Gold Pendant",
+  "type": "Jewellery",
+  "tags": [
+   "jewellery",
+   "same-day",
+   "best-seller",
+   "personalised",
+   "for-her",
+   "love"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 249.0
+   }
+  ]
+ },
+ {
+  "handle": "pearl-drop-earrings",
+  "title": "Pearl Drop Earrings",
+  "type": "Jewellery",
+  "tags": [
+   "jewellery",
+   "same-day",
+   "for-her",
+   "anniversary"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 199.0
+   }
+  ]
+ },
+ {
+  "handle": "silver-bracelet-duo",
+  "title": "Silver Bracelet Duo",
+  "type": "Jewellery",
+  "tags": [
+   "jewellery",
+   "same-day",
+   "for-her",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 179.0
+   }
+  ]
+ },
+ {
+  "handle": "classic-watch-gift-set",
+  "title": "Classic Watch Gift Set",
+  "type": "Jewellery",
+  "tags": [
+   "jewellery",
+   "same-day",
+   "for-him",
+   "graduation"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 499.0
+   }
+  ]
+ },
+ {
+  "handle": "birthday-balloon-bouquet",
+  "title": "Birthday Balloon Bouquet",
+  "type": "Balloons",
+  "tags": [
+   "balloons",
+   "same-day",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 99.0
+   }
+  ]
+ },
+ {
+  "handle": "heart-foil-balloon-set",
+  "title": "Heart Foil Balloon Set",
+  "type": "Balloons",
+  "tags": [
+   "balloons",
+   "same-day",
+   "love",
+   "anniversary"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 79.0
+   }
+  ]
+ },
+ {
+  "handle": "congrats-balloon-box",
+  "title": "Congrats Balloon Box",
+  "type": "Balloons",
+  "tags": [
+   "balloons",
+   "same-day",
+   "new",
+   "graduation"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 129.0
+   }
+  ]
+ },
+ {
+  "handle": "custom-name-mug",
+  "title": "Custom Name Mug",
+  "type": "Personalised",
+  "tags": [
+   "personalised",
+   "same-day",
+   "for-him",
+   "for-her",
+   "birthday"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 89.0
+   }
+  ]
+ },
+ {
+  "handle": "photo-frame-with-message",
+  "title": "Photo Frame with Message",
+  "type": "Personalised",
+  "tags": [
+   "personalised",
+   "same-day",
+   "anniversary",
+   "love"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 119.0
+   }
+  ]
+ },
+ {
+  "handle": "engraved-wooden-keepsake-box",
+  "title": "Engraved Wooden Keepsake Box",
+  "type": "Personalised",
+  "tags": [
+   "personalised",
+   "same-day",
+   "new",
+   "wedding",
+   "anniversary"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 149.0
+   }
+  ]
+ },
+ {
+  "handle": "greeting-card-set",
+  "title": "Greeting Card Set",
+  "type": "Add-ons",
+  "tags": [
+   "add-ons",
+   "same-day"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 15.0
+   }
+  ]
+ },
+ {
+  "handle": "mini-balloon-pack",
+  "title": "Mini Balloon Pack",
+  "type": "Add-ons",
+  "tags": [
+   "add-ons",
+   "same-day"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 25.0
+   }
+  ]
+ },
+ {
+  "handle": "cuddly-teddy-small",
+  "title": "Cuddly Teddy (Small)",
+  "type": "Add-ons",
+  "tags": [
+   "add-ons",
+   "same-day"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 45.0
+   }
+  ]
+ },
+ {
+  "handle": "mini-chocolate-box",
+  "title": "Mini Chocolate Box",
+  "type": "Add-ons",
+  "tags": [
+   "add-ons",
+   "same-day"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 35.0
+   }
+  ]
+ },
+ {
+  "handle": "premium-gift-wrap",
+  "title": "Premium Gift Wrap",
+  "type": "Add-ons",
+  "tags": [
+   "add-ons",
+   "same-day"
+  ],
+  "optionName": "Title",
+  "variants": [
+   {
+    "title": "Default Title",
+    "price": 20.0
+   }
+  ]
+ }
+]

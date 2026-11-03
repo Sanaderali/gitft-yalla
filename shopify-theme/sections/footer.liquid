@@ -1,0 +1,78 @@
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <a class="logo logo--light" href="{{ routes.root_url }}"><span>Gift</span><b>Yalla!</b></a>
+      {%- if section.settings.tagline != blank -%}
+        <p class="footer__tag">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+      <div class="social">
+        {%- assign networks = 'instagram,tiktok,snapchat,facebook,youtube' | split: ',' -%}
+        {%- for n in networks -%}
+          {%- assign key = 'social_' | append: n -%}
+          {%- assign url = settings[key] -%}
+          {%- if url != blank -%}
+            <a href="{{ url }}" target="_blank" rel="noopener" aria-label="{{ n }}">{% render 'icon', name: n %}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'menu' -%}
+          <nav class="footer__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.title }}</h4>
+            {%- for link in linklists[block.settings.menu].links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          </nav>
+        {%- when 'text' -%}
+          <div class="footer__col" {{ block.shopify_attributes }}>
+            <h4>{{ block.settings.title }}</h4>
+            <div class="rte">{{ block.settings.text }}</div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="footer__bar">
+    <div class="container footer__bar-row">
+      <small>© {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ 'footer.rights' | t }}</small>
+      <ul class="pay">
+        {%- for type in shop.enabled_payment_types -%}
+          <li>{{ type | payment_type_svg_tag: class: 'pay__icon' }}</li>
+        {%- endfor -%}
+        <li class="pay__cod">COD</li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "Yalla, make their day." }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Heading", "default": "Contact" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>support@giftyalla.com<br>+966 50 000 0000<br>Riyadh, Saudi Arabia</p>" }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [{ "name": "Footer" }]
+}
+{% endschema %}

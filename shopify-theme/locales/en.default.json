@@ -1,0 +1,120 @@
+{
+  "general": {
+    "skip_to_content": "Skip to content",
+    "tagged": "Tagged {{ tags }}",
+    "page": "Page {{ page }}",
+    "password_title": "We're wrapping something special. Opening soon!",
+    "password": "Password",
+    "enter": "Enter",
+    "search": "Search",
+    "search_placeholder": "Search flowers, cakes, gifts…",
+    "cart": "Cart",
+    "account": "Account",
+    "login": "Log in",
+    "wishlist": "Wishlist",
+    "menu": "Menu",
+    "close": "Close",
+    "country": "Country / region",
+    "language": "Language",
+    "update": "Update",
+    "view_all": "View all",
+    "shop_all": "Shop all",
+    "deliver_to": "Deliver to",
+    "same_day": "Same day",
+    "morning": "Morning",
+    "options": "{{ count }} options",
+    "sold_out": "Sold out",
+    "home": "Home",
+    "best_seller": "Best seller",
+    "new": "New",
+    "choose_options": "Choose options",
+    "from": "From"
+  },
+  "product": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "quantity": "Quantity",
+    "gift_message": "Gift message",
+    "gift_message_placeholder": "Write a sweet note for the card (optional)",
+    "details": "Details",
+    "addons": "Make it extra special",
+    "addons_sub": "Add a little something. It's delivered together.",
+    "you_may_like": "You may also like",
+    "adding": "Adding…"
+  },
+  "delivery": {
+    "title": "When should it arrive?",
+    "subtitle": "Pick a city, a day and a time window.",
+    "city": "City",
+    "choose_city": "Choose your city",
+    "date": "Delivery day",
+    "slot": "Time window",
+    "error_city": "Please choose a delivery city.",
+    "error_date": "Please choose a delivery day.",
+    "error_slot": "Please choose a time window.",
+    "expired": "This time window has just closed. Please choose another.",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "closed": "Closed",
+    "no_slots": "No time windows left today. Try another day.",
+    "cutoff_note": "Windows close {{ hours }}h before they start.",
+    "change": "Change",
+    "save": "Save",
+    "line_label": "Delivery"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty": "Your cart is empty. Let's find a gift!",
+    "continue": "Continue shopping",
+    "subtotal": "Subtotal",
+    "shipping_note": "Delivery fee and taxes calculated at checkout.",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "note_label": "Order note",
+    "note_placeholder": "Anything we should know? (optional)",
+    "issue": "Some delivery windows have closed. Please update them to continue.",
+    "items": {
+      "one": "{{ count }} item",
+      "other": "{{ count }} items"
+    }
+  },
+  "collection": {
+    "filters": "Filters",
+    "sort_by": "Sort by",
+    "apply": "Apply",
+    "clear": "Clear all",
+    "no_products": "No gifts found. Try removing a filter.",
+    "price_from": "From",
+    "price_to": "To",
+    "products": {
+      "one": "{{ count }} gift",
+      "other": "{{ count }} gifts"
+    }
+  },
+  "search": {
+    "title": "Search",
+    "results": "Results for “{{ terms }}”",
+    "no_results": "Nothing found. Try another word.",
+    "placeholder": "Search…"
+  },
+  "newsletter": {
+    "title": "Get gift ideas & surprise offers",
+    "subtitle": "Join the Yalla crew. No spam, just good vibes.",
+    "placeholder": "Your email",
+    "subscribe": "Subscribe",
+    "success": "You're in! Check your inbox."
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "payments": "We accept"
+  },
+  "wishlist": {
+    "title": "Your wishlist",
+    "empty": "Tap the heart on any gift to save it here."
+  },
+  "not_found": {
+    "title": "Oops, this gift got lost",
+    "text": "The page you're looking for doesn't exist.",
+    "button": "Back to home"
+  }
+}

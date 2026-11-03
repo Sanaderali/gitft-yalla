@@ -1,0 +1,32 @@
+<section class="section">
+  <div class="container">
+    <div class="news">
+      <div>
+        <h2>{% if section.settings.heading != blank %}{{ section.settings.heading }}{% else %}{{ 'newsletter.title' | t }}{% endif %}</h2>
+        <p>{% if section.settings.text != blank %}{{ section.settings.text }}{% else %}{{ 'newsletter.subtitle' | t }}{% endif %}</p>
+      </div>
+      {%- form 'customer', class: 'news__form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="news__ok">{{ 'newsletter.success' | t }}</p>
+        {%- else -%}
+          <div class="field-row">
+            <input type="email" name="contact[email]" required autocomplete="email" placeholder="{{ 'newsletter.placeholder' | t }}" aria-label="{{ 'newsletter.placeholder' | t }}">
+            <button class="btn btn--sun" type="submit">{{ 'newsletter.subscribe' | t }}</button>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (leave empty for default)" },
+    { "type": "text", "id": "text", "label": "Text (leave empty for default)" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

@@ -1,0 +1,63 @@
+{%- assign col = section.settings.collection -%}
+<section class="section section--{{ section.settings.background }}">
+  <div class="container">
+    <div class="section__head">
+      <div>
+        <h2>{{ section.settings.heading | default: col.title }}</h2>
+        {%- if section.settings.subheading != blank -%}<p class="muted">{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+      {%- if col != blank -%}
+        <a class="link-arrow" href="{{ col.url }}">{{ 'general.shop_all' | t }} {% render 'icon', name: 'arrow-right' %}</a>
+      {%- endif -%}
+    </div>
+
+    {%- if col == blank or col.products.size == 0 -%}
+      <div class="rail__track rail__track--cards">
+        {%- for i in (1..4) -%}
+          <div class="pcard-wrap">
+            <article class="pcard">
+              <div class="pcard__media"><div class="tile tile--{{ i | modulo: 4 }}"><span class="tile__emoji">🎁</span></div></div>
+              <span class="pcard__title">Example gift</span>
+              <div class="pcard__meta"><span class="price">{{ 99 | times: 100 | money }}</span></div>
+            </article>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="rail" data-rail>
+        <button type="button" class="rail__btn rail__btn--prev" data-rail-prev aria-label="Previous">{% render 'icon', name: 'arrow-left' %}</button>
+        <ul class="rail__track rail__track--cards">
+          {%- for product in col.products limit: section.settings.limit -%}
+            <li class="pcard-wrap">{% render 'product-card', product: product %}</li>
+          {%- endfor -%}
+        </ul>
+        <button type="button" class="rail__btn rail__btn--next" data-rail-next aria-label="Next">{% render 'icon', name: 'arrow-right' %}</button>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product carousel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Flowers & Chocolates" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Sweet surprises paired with fresh blooms" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "label": "Products to show", "min": 4, "max": 16, "step": 1, "default": 10 },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "default": "none",
+      "options": [
+        { "value": "none", "label": "Page" },
+        { "value": "mint", "label": "Mint" },
+        { "value": "lilac", "label": "Lilac" },
+        { "value": "sun", "label": "Sunshine" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product carousel" }]
+}
+{% endschema %}

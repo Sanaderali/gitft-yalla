@@ -1,0 +1,27 @@
+{
+  "name": "Footer group",
+  "type": "footer",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "shop": {
+          "type": "menu",
+          "settings": { "title": "Shop", "menu": "footer" }
+        },
+        "contact": {
+          "type": "text",
+          "settings": {
+            "title": "Contact",
+            "text": "<p>support@giftyalla.com<br>+966 50 000 0000<br>Riyadh, Saudi Arabia</p>"
+          }
+        }
+      },
+      "block_order": ["shop", "contact"],
+      "settings": {
+        "tagline": "Yalla, make their day."
+      }
+    }
+  },
+  "order": ["footer"]
+}

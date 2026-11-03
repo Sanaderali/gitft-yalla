@@ -1,0 +1,167 @@
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign form_id = 'product-form-' | append: section.id
+  assign related_collection = blank
+  for c in product.collections
+    unless c.handle == 'all' or c.handle == 'frontpage' or c.handle == 'add-ons'
+      if related_collection == blank
+        assign related_collection = c
+      endif
+    endunless
+  endfor
+-%}
+<section class="section pdp" data-product>
+  <div class="container">
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+      {%- if related_collection != blank -%} / <a href="{{ related_collection.url }}">{{ related_collection.title }}</a>{%- endif -%}
+    </nav>
+
+    <div class="pdp__grid">
+      <div class="gallery">
+        <div class="gallery__track" data-gallery>
+          {%- for media in product.media -%}
+            {%- if media.media_type == 'image' -%}
+              <div class="gallery__item" data-media-id="{{ media.id }}">
+                {{ media | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480, 720, 960, 1200', sizes: '(min-width: 990px) 50vw, 100vw', alt: media.alt | default: product.title }}
+              </div>
+            {%- endif -%}
+          {%- else -%}
+            <div class="gallery__item">{% render 'placeholder-tile', product: product %}</div>
+          {%- endfor -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="gallery__thumbs">
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button type="button" data-goto="{{ media.id }}" aria-label="Image {{ forloop.index }}">
+                  {{ media | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="pdp__info">
+        <div class="pdp__badges">
+          {%- if product.tags contains 'morning' -%}<span class="chip chip--morning">☀ {{ 'general.morning' | t }}</span>{%- endif -%}
+          {%- if product.tags contains 'same-day' -%}<span class="chip chip--same">⚡ {{ 'general.same_day' | t }}</span>{%- endif -%}
+          {%- if product.tags contains 'best-seller' -%}<span class="chip chip--best">★ {{ 'general.best_seller' | t }}</span>{%- endif -%}
+        </div>
+        <h1>{{ product.title }}</h1>
+        <div class="pdp__price">
+          <span class="price__now" data-pdp-price>{{ current.price | money }}</span>
+          <s class="price__was" data-pdp-compare{% unless current.compare_at_price > current.price %} hidden{% endunless %}>{{ current.compare_at_price | money }}</s>
+        </div>
+
+        {%- form 'product', product, id: form_id, class: 'pdp__form' -%}
+          <input type="hidden" name="id" value="{{ current.id }}" data-variant-id>
+
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <fieldset class="opt">
+                <legend>{{ option.name }}</legend>
+                <div class="chips">
+                  {%- for value in option.values -%}
+                    <label class="chip-radio">
+                      <input type="radio" name="option-{{ option.position }}" value="{{ value | escape }}" data-option="{{ forloop.parentloop.index0 }}"{% if option.selected_value == value %} checked{% endif %}>
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          {% render 'delivery-picker' %}
+
+          <label class="field">
+            <span class="field__label">{{ 'product.gift_message' | t }}</span>
+            <textarea name="properties[Gift message]" rows="3" maxlength="200" placeholder="{{ 'product.gift_message_placeholder' | t }}"></textarea>
+          </label>
+
+          {%- assign addons = section.settings.addons_collection -%}
+          {%- if addons != blank and addons.products.size > 0 -%}
+            <fieldset class="addons">
+              <legend>🎀 {{ 'product.addons' | t }}</legend>
+              <p class="muted">{{ 'product.addons_sub' | t }}</p>
+              <div class="addons__list">
+                {%- for addon in addons.products limit: 6 -%}
+                  {%- assign av = addon.selected_or_first_available_variant -%}
+                  {%- if addon.available -%}
+                    <label class="addon">
+                      <input type="checkbox" data-addon="{{ av.id }}">
+                      <span class="addon__img">
+                        {%- if addon.featured_image -%}
+                          {{ addon.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}
+                        {%- else -%}
+                          {% render 'placeholder-tile', product: addon %}
+                        {%- endif -%}
+                      </span>
+                      <span class="addon__txt">{{ addon.title }}<b>{{ av.price | money }}</b></span>
+                    </label>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </fieldset>
+          {%- endif -%}
+
+          <div class="pdp__buy">
+            <label class="qty">
+              <span class="visually-hidden">{{ 'product.quantity' | t }}</span>
+              <button type="button" data-qty-minus aria-label="-">−</button>
+              <input type="number" name="quantity" value="1" min="1" inputmode="numeric" data-qty>
+              <button type="button" data-qty-plus aria-label="+">+</button>
+            </label>
+            <button type="submit" class="btn btn--primary btn--lg btn--block" data-add{% unless current.available %} disabled{% endunless %}>
+              <span data-add-label data-add-text="{{ 'product.add_to_cart' | t | escape }}" data-soldout-text="{{ 'product.sold_out' | t | escape }}">{% if current.available %}{{ 'product.add_to_cart' | t }}{% else %}{{ 'product.sold_out' | t }}{% endif %}</span>
+            </button>
+          </div>
+          <p class="form-error" data-form-error role="alert" hidden></p>
+        {%- endform -%}
+
+        {%- if product.description != blank -%}
+          <details class="acc" open>
+            <summary>{{ 'product.details' | t }} {% render 'icon', name: 'chevron' %}</summary>
+            <div class="rte">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <script type="application/json" data-variants>
+      [
+        {%- for v in product.variants -%}
+          {"id":{{ v.id }},"options":{{ v.options | json }},"available":{{ v.available }},"price":{{ v.price | money | json }},"compare":{% if v.compare_at_price > v.price %}{{ v.compare_at_price | money | json }}{% else %}null{% endif %},"media":{{ v.featured_media.id | default: 'null' }}}{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    </script>
+  </div>
+</section>
+
+{%- if related_collection != blank -%}
+  <section class="section">
+    <div class="container">
+      <div class="section__head"><h2>{{ 'product.you_may_like' | t }}</h2></div>
+      <ul class="grid grid--4">
+        {%- assign shown = 0 -%}
+        {%- for p in related_collection.products -%}
+          {%- if p.id != product.id and shown < 4 -%}
+            <li>{% render 'product-card', product: p %}</li>
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product page",
+  "settings": [
+    { "type": "collection", "id": "addons_collection", "label": "Add-ons collection", "info": "Products from this collection appear as tick-box extras (balloons, cards, chocolates…)." }
+  ]
+}
+{% endschema %}

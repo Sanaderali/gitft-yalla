@@ -1,0 +1,40 @@
+{%- comment -%}
+  Product card. Every card links to the product page because a delivery
+  day + time window has to be chosen before adding to cart.
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+<article class="pcard">
+  <div class="pcard__media">
+    <a class="pcard__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', widths: '240, 360, 480, 600', sizes: '(min-width: 990px) 20vw, 46vw', alt: product.featured_image.alt | default: product.title }}
+      {%- else -%}
+        {% render 'placeholder-tile', product: product %}
+      {%- endif -%}
+    </a>
+    <button type="button" class="wish" data-wish="{{ product.handle }}" aria-pressed="false" aria-label="{{ 'general.wishlist' | t }}">
+      {% render 'icon', name: 'heart' %}
+    </button>
+    {%- if product.tags contains 'best-seller' -%}
+      <span class="ribbon">{{ 'general.best_seller' | t }}</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="ribbon ribbon--new">{{ 'general.new' | t }}</span>
+    {%- endif -%}
+    {%- if product.available == false -%}
+      <span class="ribbon ribbon--out">{{ 'general.sold_out' | t }}</span>
+    {%- elsif product.variants.size > 1 -%}
+      <a class="pcard__opt" href="{{ product.url }}">{{ 'general.options' | t: count: product.variants.size }} {% render 'icon', name: 'chevron' %}</a>
+    {%- else -%}
+      <a class="pcard__plus" href="{{ product.url }}" aria-label="{{ 'general.choose_options' | t }}">{% render 'icon', name: 'plus' %}</a>
+    {%- endif -%}
+  </div>
+  <a class="pcard__title" href="{{ product.url }}">{{ product.title }}</a>
+  <div class="pcard__meta">
+    {% render 'price', product: product %}
+    {%- if product.tags contains 'morning' -%}
+      <span class="chip chip--morning">☀ {{ 'general.morning' | t }}</span>
+    {%- elsif product.tags contains 'same-day' -%}
+      <span class="chip chip--same">⚡ {{ 'general.same_day' | t }}</span>
+    {%- endif -%}
+  </div>
+</article>

@@ -1,0 +1,151 @@
+{%- liquid
+  assign menu = linklists[section.settings.menu]
+-%}
+<header class="header" data-header>
+  <div class="container header__row">
+    <button type="button" class="icon-btn header__burger" data-open="#mobile-menu" aria-label="{{ 'general.menu' | t }}">
+      {% render 'icon', name: 'menu' %}
+    </button>
+
+    <a class="logo" href="{{ routes.root_url }}">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 320 | image_tag: alt: shop.name, class: 'logo__img', widths: '160, 320' }}
+      {%- else -%}
+        <span>Gift</span><b>Yalla!</b>
+      {%- endif -%}
+    </a>
+
+    <label class="citypill" title="{{ 'general.deliver_to' | t }}">
+      {% render 'icon', name: 'pin' %}
+      <select data-city-pill aria-label="{{ 'general.deliver_to' | t }}">
+        <option value="">{{ 'delivery.choose_city' | t }}</option>
+        {%- assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />' -%}
+        {%- for line in city_lines -%}
+          {%- assign c = line | strip -%}
+          {%- if c != blank -%}<option value="{{ c | escape }}">{{ c }}</option>{%- endif -%}
+        {%- endfor -%}
+      </select>
+    </label>
+
+    <form class="header__search" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search_placeholder' | t }}" aria-label="{{ 'general.search' | t }}">
+      <input type="hidden" name="type" value="product">
+      <button type="submit" class="icon-btn" aria-label="{{ 'general.search' | t }}">{% render 'icon', name: 'search' %}</button>
+    </form>
+
+    <div class="header__tools">
+      {%- if localization.available_countries.size > 1 or localization.available_languages.size > 1 -%}
+        <details class="loc">
+          <summary class="pill">
+            {% render 'icon', name: 'globe' %}
+            <span>{{ localization.country.iso_code }} · {{ localization.language.endonym_name }}</span>
+          </summary>
+          <div class="loc__panel">
+            {%- form 'localization', id: 'HeaderLoc' -%}
+              {%- if localization.available_countries.size > 1 -%}
+                <label class="field">
+                  <span class="field__label">{{ 'general.country' | t }}</span>
+                  <select name="country_code">
+                    {%- for country in localization.available_countries -%}
+                      <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
+                    {%- endfor -%}
+                  </select>
+                </label>
+              {%- endif -%}
+              {%- if localization.available_languages.size > 1 -%}
+                <label class="field">
+                  <span class="field__label">{{ 'general.language' | t }}</span>
+                  <select name="language_code">
+                    {%- for language in localization.available_languages -%}
+                      <option value="{{ language.iso_code }}"{% if language.iso_code == localization.language.iso_code %} selected{% endif %}>{{ language.endonym_name }}</option>
+                    {%- endfor -%}
+                  </select>
+                </label>
+              {%- endif -%}
+              <button class="btn btn--primary btn--sm" type="submit">{{ 'general.update' | t }}</button>
+            {%- endform -%}
+          </div>
+        </details>
+      {%- endif -%}
+
+      <a class="icon-btn" href="{{ routes.root_url }}pages/wishlist" aria-label="{{ 'general.wishlist' | t }}">
+        {% render 'icon', name: 'heart' %}<span class="badge" data-wish-count hidden>0</span>
+      </a>
+      {%- if shop.customer_accounts_enabled -%}
+        <a class="icon-btn" href="{{ routes.account_url }}" aria-label="{{ 'general.account' | t }}">{% render 'icon', name: 'user' %}</a>
+      {%- endif -%}
+      <a class="icon-btn" href="{{ routes.cart_url }}" aria-label="{{ 'general.cart' | t }}">
+        {% render 'icon', name: 'cart' %}<span class="badge" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  {%- if menu != blank -%}
+    <nav class="nav" aria-label="Main">
+      <ul class="container nav__list">
+        {%- for link in menu.links -%}
+          <li class="nav__item{% if link.links.size > 0 %} has-mega{% endif %}">
+            <a class="nav__link{% if link.active %} is-active{% endif %}" href="{{ link.url }}">
+              {{ link.title }}{% if link.links.size > 0 %} {% render 'icon', name: 'chevron' %}{% endif %}
+            </a>
+            {%- if link.links.size > 0 -%}
+              <div class="mega">
+                <div class="container mega__grid">
+                  {%- for child in link.links -%}
+                    <div class="mega__col">
+                      <a class="mega__title" href="{{ child.url }}">{{ child.title }}</a>
+                      {%- for grand in child.links -%}
+                        <a href="{{ grand.url }}">{{ grand.title }}</a>
+                      {%- endfor -%}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+  {%- endif -%}
+</header>
+
+<div class="drawer" id="mobile-menu" hidden>
+  <div class="drawer__scrim" data-close></div>
+  <div class="drawer__panel">
+    <div class="drawer__head">
+      <span class="logo"><span>Gift</span><b>Yalla!</b></span>
+      <button type="button" class="icon-btn" data-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+    </div>
+    {%- if menu != blank -%}
+      <ul class="drawer__list">
+        {%- for link in menu.links -%}
+          <li>
+            {%- if link.links.size > 0 -%}
+              <details>
+                <summary>{{ link.title }} {% render 'icon', name: 'chevron' %}</summary>
+                <ul>
+                  <li><a href="{{ link.url }}">{{ 'general.view_all' | t }}</a></li>
+                  {%- for child in link.links -%}
+                    <li><a href="{{ child.url }}">{{ child.title }}</a></li>
+                  {%- endfor -%}
+                </ul>
+              </details>
+            {%- else -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (text logo is used until you add one)" },
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

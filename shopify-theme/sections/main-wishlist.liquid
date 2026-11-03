@@ -1,0 +1,13 @@
+<section class="section">
+  <div class="container">
+    <header class="pagehead"><h1>{{ 'wishlist.title' | t }}</h1></header>
+    <ul class="grid" data-wishlist-grid></ul>
+    <p class="empty" data-wishlist-empty hidden>{{ 'wishlist.empty' | t }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wishlist page"
+}
+{% endschema %}

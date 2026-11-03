@@ -1,0 +1,443 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "Yalla, surprise someone",
+        "heading": "Surprise them. Today.",
+        "subheading": "Fresh flowers, dreamy cakes and gifts they'll screenshot. Delivered same-day, wrapped with love.",
+        "button_label": "Shop gifts",
+        "button_link": "shopify://collections/same-day-delivery"
+      },
+      "blocks": {
+        "b1": {
+          "type": "promo",
+          "settings": {
+            "heading": "Make birthdays extra special",
+            "text": "Cakes, balloons & more",
+            "button": "Send now",
+            "link": "shopify://collections/birthday"
+          }
+        },
+        "b2": {
+          "type": "promo",
+          "settings": {
+            "heading": "Flowers & chocolates, perfectly paired",
+            "text": "The classic that never fails",
+            "button": "Gift now",
+            "link": "shopify://collections/flowers-and-chocolates"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2"
+      ]
+    },
+    "usp": {
+      "type": "usp-bar",
+      "settings": {},
+      "blocks": {
+        "b1": {
+          "type": "item",
+          "settings": {
+            "icon": "truck",
+            "title": "Same-day delivery",
+            "text": "Pick your time window"
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "icon": "gift",
+            "title": "Wrapped with love",
+            "text": "Free gift card message"
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "icon": "card",
+            "title": "Pay on delivery",
+            "text": "Cash on delivery available"
+          }
+        },
+        "b4": {
+          "type": "item",
+          "settings": {
+            "icon": "clock",
+            "title": "Live till late",
+            "text": "Slots until 9 PM"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "occasions": {
+      "type": "collection-carousel",
+      "settings": {
+        "heading": "Celebrate every moment",
+        "shape": "arch"
+      },
+      "blocks": {
+        "b1": {
+          "type": "collection",
+          "settings": {
+            "collection": "birthday",
+            "emoji": "🎂"
+          }
+        },
+        "b2": {
+          "type": "collection",
+          "settings": {
+            "collection": "get-well-soon",
+            "emoji": "🌷"
+          }
+        },
+        "b3": {
+          "type": "collection",
+          "settings": {
+            "collection": "love",
+            "emoji": "❤️"
+          }
+        },
+        "b4": {
+          "type": "collection",
+          "settings": {
+            "collection": "graduation",
+            "emoji": "🎓"
+          }
+        },
+        "b5": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-born",
+            "emoji": "🍼"
+          }
+        },
+        "b6": {
+          "type": "collection",
+          "settings": {
+            "collection": "wedding",
+            "emoji": "💍"
+          }
+        },
+        "b7": {
+          "type": "collection",
+          "settings": {
+            "collection": "anniversary",
+            "emoji": "🥂"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7"
+      ]
+    },
+    "categories": {
+      "type": "collection-carousel",
+      "settings": {
+        "heading": "Gifts by category",
+        "shape": "arch"
+      },
+      "blocks": {
+        "b1": {
+          "type": "collection",
+          "settings": {
+            "collection": "new-arrivals",
+            "emoji": "✨"
+          }
+        },
+        "b2": {
+          "type": "collection",
+          "settings": {
+            "collection": "gift-sets",
+            "emoji": "🎁"
+          }
+        },
+        "b3": {
+          "type": "collection",
+          "settings": {
+            "collection": "flowers",
+            "emoji": "💐"
+          }
+        },
+        "b4": {
+          "type": "collection",
+          "settings": {
+            "collection": "cakes",
+            "emoji": "🍰"
+          }
+        },
+        "b5": {
+          "type": "collection",
+          "settings": {
+            "collection": "chocolates",
+            "emoji": "🍫"
+          }
+        },
+        "b6": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfumes",
+            "emoji": "🧴"
+          }
+        },
+        "b7": {
+          "type": "collection",
+          "settings": {
+            "collection": "jewellery",
+            "emoji": "💎"
+          }
+        },
+        "b8": {
+          "type": "collection",
+          "settings": {
+            "collection": "balloons",
+            "emoji": "🎈"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6",
+        "b7",
+        "b8"
+      ]
+    },
+    "flowers-choc": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Flowers & Chocolates",
+        "subheading": "Sweet surprises paired with fresh blooms",
+        "collection": "flowers-and-chocolates",
+        "limit": 10,
+        "background": "mint"
+      }
+    },
+    "best": {
+      "type": "best-gifts-tabs",
+      "settings": {
+        "heading": "Best gifts",
+        "subheading": "Celebrate life's special moments with our bestsellers"
+      },
+      "blocks": {
+        "b1": {
+          "type": "tab",
+          "settings": {
+            "label": "Flowers",
+            "collection": "flowers"
+          }
+        },
+        "b2": {
+          "type": "tab",
+          "settings": {
+            "label": "Cakes",
+            "collection": "cakes"
+          }
+        },
+        "b3": {
+          "type": "tab",
+          "settings": {
+            "label": "Jewellery",
+            "collection": "jewellery"
+          }
+        },
+        "b4": {
+          "type": "tab",
+          "settings": {
+            "label": "Perfumes",
+            "collection": "perfumes"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "personalised": {
+      "type": "promo-banner",
+      "settings": {
+        "heading": "Make it personal ✨",
+        "text": "Names, initials, messages. Gifts that say \"I thought about you\".",
+        "button": "Personalise now",
+        "link": "shopify://collections/personalised",
+        "tone": "primary"
+      }
+    },
+    "gift-sets": {
+      "type": "collection-carousel",
+      "settings": {
+        "heading": "Perfect gift sets for every occasion",
+        "shape": "card"
+      },
+      "blocks": {
+        "b1": {
+          "type": "collection",
+          "settings": {
+            "collection": "gift-sets",
+            "emoji": "🎁",
+            "title": "All gift sets"
+          }
+        },
+        "b2": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifts-for-her",
+            "emoji": "💝"
+          }
+        },
+        "b3": {
+          "type": "collection",
+          "settings": {
+            "collection": "gifts-for-him",
+            "emoji": "🎩"
+          }
+        },
+        "b4": {
+          "type": "collection",
+          "settings": {
+            "collection": "flowers-and-chocolates",
+            "emoji": "💐",
+            "title": "With chocolate"
+          }
+        },
+        "b5": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfumes",
+            "emoji": "🧴",
+            "title": "With perfume"
+          }
+        },
+        "b6": {
+          "type": "collection",
+          "settings": {
+            "collection": "jewellery",
+            "emoji": "💍",
+            "title": "With jewellery"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ]
+    },
+    "new": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Fresh in",
+        "subheading": "New arrivals we're obsessed with",
+        "collection": "new-arrivals",
+        "limit": 10,
+        "background": "lilac"
+      }
+    },
+    "kids": {
+      "type": "collection-carousel",
+      "settings": {
+        "heading": "Kids' birthday character cakes",
+        "subheading": "Fresh cakes delivered today",
+        "shape": "round"
+      },
+      "blocks": {
+        "b1": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "🦖",
+            "title": "Dinosaur"
+          }
+        },
+        "b2": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "🐰",
+            "title": "Bunny"
+          }
+        },
+        "b3": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "⭐",
+            "title": "Star"
+          }
+        },
+        "b4": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "🐱",
+            "title": "Kitty"
+          }
+        },
+        "b5": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "❄️",
+            "title": "Frozen"
+          }
+        },
+        "b6": {
+          "type": "collection",
+          "settings": {
+            "collection": "kids-cakes",
+            "emoji": "⛏️",
+            "title": "Pixel"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "usp",
+    "occasions",
+    "categories",
+    "flowers-choc",
+    "best",
+    "personalised",
+    "gift-sets",
+    "new",
+    "kids",
+    "newsletter"
+  ]
+}

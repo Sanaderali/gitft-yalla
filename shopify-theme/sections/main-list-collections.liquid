@@ -1,0 +1,33 @@
+<section class="section">
+  <div class="container">
+    <header class="pagehead"><h1>{{ 'general.shop_all' | t }}</h1></header>
+    <ul class="grid grid--tiles">
+      {%- for collection in collections -%}
+        {%- liquid
+          assign img = collection.image
+          if img == blank
+            assign img = collection.products.first.featured_image
+          endif
+        -%}
+        <li class="ctile ctile--card ctile--tone{{ forloop.index0 | modulo: 4 }}">
+          <a href="{{ collection.url }}">
+            <span class="ctile__media">
+              {%- if img != blank -%}
+                {{ img | image_url: width: 400 | image_tag: loading: 'lazy', alt: collection.title }}
+              {%- else -%}
+                <span class="ctile__emoji">🎁</span>
+              {%- endif -%}
+            </span>
+            <span class="ctile__label">{{ collection.title }}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections list"
+}
+{% endschema %}

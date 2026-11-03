@@ -1,0 +1,58 @@
+{%- comment -%}
+  Outputs the delivery rules (cities, slots, cutoff…) as JSON for theme.js.
+  Everything here is editable from Theme settings > Delivery.
+{%- endcomment -%}
+{%- liquid
+  assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />'
+  assign slot_lines = settings.delivery_slots | newline_to_br | strip_newlines | split: '<br />'
+  assign blackout_lines = settings.delivery_blackout | newline_to_br | strip_newlines | split: '<br />'
+  assign tz = settings.delivery_timezone_offset | default: 3 | times: 1
+-%}
+<script type="application/json" id="delivery-config">
+  {
+    "locale": {{ request.locale.iso_code | json }},
+    "tz": {{ tz }},
+    "cutoff": {{ settings.delivery_cutoff_hours | default: 2 }},
+    "days": {{ settings.delivery_days_ahead | default: 14 }},
+    "cities": [
+      {%- assign first = true -%}
+      {%- for line in city_lines -%}
+        {%- assign c = line | strip -%}
+        {%- if c != blank -%}{% unless first %},{% endunless %}{{ c | json }}{%- assign first = false -%}{%- endif -%}
+      {%- endfor -%}
+    ],
+    "slots": [
+      {%- assign first = true -%}
+      {%- for line in slot_lines -%}
+        {%- assign parts = line | strip | split: '-' -%}
+        {%- if parts.size == 2 -%}
+          {% unless first %},{% endunless %}{ "start": {{ parts[0] | strip | json }}, "end": {{ parts[1] | strip | json }} }
+          {%- assign first = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    ],
+    "blackout": [
+      {%- assign first = true -%}
+      {%- for line in blackout_lines -%}
+        {%- assign b = line | strip -%}
+        {%- if b != blank -%}{% unless first %},{% endunless %}{{ b | json }}{%- assign first = false -%}{%- endif -%}
+      {%- endfor -%}
+    ],
+    "routes": {
+      "root": {{ routes.root_url | json }},
+      "cart": {{ routes.cart_url | json }},
+      "cartAdd": {{ routes.cart_add_url | json }},
+      "cartChange": {{ routes.cart_change_url | json }}
+    },
+    "i18n": {
+      "chooseCity": {{ 'delivery.error_city' | t | json }},
+      "chooseDate": {{ 'delivery.error_date' | t | json }},
+      "chooseSlot": {{ 'delivery.error_slot' | t | json }},
+      "expired": {{ 'delivery.expired' | t | json }},
+      "today": {{ 'delivery.today' | t | json }},
+      "tomorrow": {{ 'delivery.tomorrow' | t | json }},
+      "closed": {{ 'delivery.closed' | t | json }},
+      "noSlots": {{ 'delivery.no_slots' | t | json }}
+    }
+  }
+</script>

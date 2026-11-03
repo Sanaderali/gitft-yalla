@@ -1,0 +1,85 @@
+<section class="section">
+  <div class="container">
+    <header class="pagehead">
+      <h1>{{ 'cart.title' | t }}</h1>
+      {%- if cart.item_count > 0 -%}<p class="muted">{{ 'cart.items' | t: count: cart.item_count }}</p>{%- endif -%}
+    </header>
+
+    {%- if cart.item_count == 0 -%}
+      <div class="empty">
+        <p>{{ 'cart.empty' | t }}</p>
+        <a class="btn btn--primary" href="{{ routes.collections_url }}">{{ 'cart.continue' | t }}</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form" class="cart" data-cart>
+        <div class="cart__items">
+          {%- for item in cart.items -%}
+            <article class="citem" data-line="{{ forloop.index }}" data-qty="{{ item.quantity }}" data-date="{{ item.properties['_Date'] }}" data-slot="{{ item.properties['_Slot'] }}" data-props="{{ item.properties | json | escape }}">
+              <a class="citem__img" href="{{ item.url }}">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: item.title }}
+                {%- else -%}
+                  {% render 'placeholder-tile', product: item.product %}
+                {%- endif -%}
+              </a>
+              <div class="citem__body">
+                <a class="citem__title" href="{{ item.url }}">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <small class="muted">{{ item.variant.title }}</small>
+                {%- endunless -%}
+                <ul class="citem__props">
+                  {%- for prop in item.properties -%}
+                    {%- assign first_char = prop.first | slice: 0 -%}
+                    {%- if first_char != '_' and prop.last != blank -%}
+                      <li><b>{{ prop.first }}:</b> {{ prop.last }}</li>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </ul>
+                {%- if item.properties['_Date'] != blank -%}
+                  <p class="citem__warn" data-line-warn hidden>{{ 'delivery.expired' | t }}</p>
+                  <button type="button" class="link-btn" data-change-delivery>{{ 'delivery.change' | t }} {{ 'delivery.line_label' | t | downcase }}</button>
+                {%- endif -%}
+              </div>
+              <div class="citem__side">
+                <b class="citem__price">{{ item.final_line_price | money }}</b>
+                <label class="qty qty--sm">
+                  <span class="visually-hidden">{{ 'product.quantity' | t }}</span>
+                  <input type="number" value="{{ item.quantity }}" min="0" inputmode="numeric" data-line-qty>
+                </label>
+                <a class="link-btn" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+              </div>
+            </article>
+          {%- endfor -%}
+        </div>
+
+        <aside class="cart__summary">
+          <label class="field">
+            <span class="field__label">{{ 'cart.note_label' | t }}</span>
+            <textarea name="note" rows="3" placeholder="{{ 'cart.note_placeholder' | t }}">{{ cart.note }}</textarea>
+          </label>
+          <div class="sumrow"><span>{{ 'cart.subtotal' | t }}</span><b>{{ cart.total_price | money }}</b></div>
+          <p class="muted">{{ 'cart.shipping_note' | t }}</p>
+          <p class="form-error" data-cart-error role="alert" hidden>{{ 'cart.issue' | t }}</p>
+          <button type="submit" name="checkout" class="btn btn--primary btn--lg btn--block" data-checkout>{{ 'cart.checkout' | t }}</button>
+          <a class="link-arrow" href="{{ routes.collections_url }}">{{ 'cart.continue' | t }}</a>
+        </aside>
+      </form>
+
+      <dialog class="dlg" data-delivery-dialog>
+        <div class="dlg__body">
+          <button type="button" class="icon-btn dlg__close" data-dialog-close aria-label="{{ 'general.close' | t }}">{% render 'icon', name: 'close' %}</button>
+          {% render 'delivery-picker' %}
+          <div class="dlg__actions">
+            <button type="button" class="btn btn--primary" data-dialog-save>{{ 'delivery.save' | t }}</button>
+          </div>
+        </div>
+      </dialog>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page"
+}
+{% endschema %}

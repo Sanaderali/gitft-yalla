@@ -1,0 +1,28 @@
+{%- comment -%}
+  Brand-coloured tile with an emoji, shown when a product has no image yet.
+  Usage: {% render 'placeholder-tile', product: product %}
+{%- endcomment -%}
+{%- liquid
+  assign emoji = '🎁'
+  if product.tags contains 'flowers'
+    assign emoji = '💐'
+  elsif product.tags contains 'cakes'
+    assign emoji = '🎂'
+  elsif product.tags contains 'chocolates'
+    assign emoji = '🍫'
+  elsif product.tags contains 'perfumes'
+    assign emoji = '🧴'
+  elsif product.tags contains 'jewellery'
+    assign emoji = '💍'
+  elsif product.tags contains 'balloons'
+    assign emoji = '🎈'
+  elsif product.tags contains 'personalised'
+    assign emoji = '✨'
+  elsif product.tags contains 'add-ons'
+    assign emoji = '🎀'
+  endif
+  assign tone = product.title.size | modulo: 4
+-%}
+<div class="tile tile--{{ tone }}" role="img" aria-label="{{ product.title | escape }}">
+  <span class="tile__emoji">{{ emoji }}</span>
+</div>

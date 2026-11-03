@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "addons_collection": "add-ons"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

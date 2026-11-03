@@ -1,0 +1,46 @@
+{%- comment -%}
+  Delivery city + day + time-window picker.
+  The chips are built by theme.js from the rules in Theme settings > Delivery.
+  The hidden inputs become line item properties:
+    City, Delivery date, Delivery slot   (visible to customer and in admin)
+    _Date, _Slot                         (hidden helpers used for validation)
+  Usage: {% render 'delivery-picker' %}
+{%- endcomment -%}
+{%- liquid
+  assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />'
+-%}
+<div class="dpick" data-dpick>
+  <div class="dpick__head">
+    <h3>{% render 'icon', name: 'truck' %} {{ 'delivery.title' | t }}</h3>
+    <p>{{ 'delivery.subtitle' | t }}</p>
+  </div>
+
+  <label class="field">
+    <span class="field__label">{{ 'delivery.city' | t }}</span>
+    <select name="properties[City]" data-f="city">
+      <option value="">{{ 'delivery.choose_city' | t }}</option>
+      {%- for line in city_lines -%}
+        {%- assign c = line | strip -%}
+        {%- if c != blank -%}<option value="{{ c | escape }}">{{ c }}</option>{%- endif -%}
+      {%- endfor -%}
+    </select>
+  </label>
+
+  <div class="field">
+    <span class="field__label">{{ 'delivery.date' | t }}</span>
+    <div class="chips chips--scroll" data-d-dates></div>
+  </div>
+
+  <div class="field">
+    <span class="field__label">{{ 'delivery.slot' | t }}</span>
+    <div class="chips" data-d-slots></div>
+    <p class="dpick__note">{{ 'delivery.cutoff_note' | t: hours: settings.delivery_cutoff_hours }}</p>
+  </div>
+
+  <p class="dpick__error" data-d-error role="alert" hidden></p>
+
+  <input type="hidden" name="properties[_Date]" data-f="date">
+  <input type="hidden" name="properties[Delivery date]" data-f="dateLabel">
+  <input type="hidden" name="properties[_Slot]" data-f="slot">
+  <input type="hidden" name="properties[Delivery slot]" data-f="slotLabel">
+</div>

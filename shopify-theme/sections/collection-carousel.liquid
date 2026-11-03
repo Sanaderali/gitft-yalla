@@ -1,0 +1,86 @@
+<section class="section">
+  <div class="container">
+    <div class="section__head">
+      <div>
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.subheading != blank -%}<p class="muted">{{ section.settings.subheading }}</p>{%- endif -%}
+      </div>
+    </div>
+
+    <div class="rail" data-rail>
+      <button type="button" class="rail__btn rail__btn--prev" data-rail-prev aria-label="Previous">{% render 'icon', name: 'arrow-left' %}</button>
+      <ul class="rail__track rail__track--tiles">
+        {%- for block in section.blocks -%}
+          {%- assign col = block.settings.collection -%}
+          {%- liquid
+            assign img = block.settings.image
+            if img == blank and col.image != blank
+              assign img = col.image
+            endif
+            if img == blank and col.products.first.featured_image != blank
+              assign img = col.products.first.featured_image
+            endif
+            assign label = block.settings.title | default: col.title
+          -%}
+          <li class="ctile ctile--{{ section.settings.shape }} ctile--tone{{ forloop.index0 | modulo: 4 }}" {{ block.shopify_attributes }}>
+            <a href="{{ col.url | default: routes.collections_url }}">
+              <span class="ctile__media">
+                {%- if img != blank -%}
+                  {{ img | image_url: width: 400 | image_tag: loading: 'lazy', widths: '200, 400', sizes: '160px', alt: label }}
+                {%- else -%}
+                  <span class="ctile__emoji">{{ block.settings.emoji }}</span>
+                {%- endif -%}
+              </span>
+              <span class="ctile__label">{{ label | default: 'Collection' }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+      <button type="button" class="rail__btn rail__btn--next" data-rail-next aria-label="Next">{% render 'icon', name: 'arrow-right' %}</button>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collection carousel",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Celebrate every moment" },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "Tile shape",
+      "default": "arch",
+      "options": [
+        { "value": "arch", "label": "Arch" },
+        { "value": "round", "label": "Circle" },
+        { "value": "card", "label": "Rounded card" }
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title", "label": "Title override" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "emoji", "label": "Emoji (shown until you add an image)", "default": "🎁" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection carousel",
+      "blocks": [
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" },
+        { "type": "collection" }
+      ]
+    }
+  ]
+}
+{% endschema %}

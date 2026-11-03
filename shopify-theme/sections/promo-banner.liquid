@@ -1,0 +1,41 @@
+<section class="section">
+  <div class="container">
+    <a class="banner banner--{{ section.settings.tone }}" href="{{ section.settings.link | default: routes.collections_url }}">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '700, 1000, 1400', sizes: '100vw', class: 'banner__img', alt: section.settings.heading }}
+      {%- endif -%}
+      <span class="banner__copy">
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.text }}</p>
+        {%- if section.settings.button != blank -%}
+          <span class="btn btn--sun">{{ section.settings.button }} {% render 'icon', name: 'arrow-right' %}</span>
+        {%- endif -%}
+      </span>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Make it personal ✨" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Names, initials, messages. Gifts that say 'I thought about you'." },
+    { "type": "text", "id": "button", "label": "Button label", "default": "Personalise now" },
+    { "type": "url", "id": "link", "label": "Link" },
+    {
+      "type": "select",
+      "id": "tone",
+      "label": "Colour",
+      "default": "primary",
+      "options": [
+        { "value": "primary", "label": "Grape" },
+        { "value": "accent", "label": "Coral" },
+        { "value": "ink", "label": "Night" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Promo banner" }]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+<section class="section">
+  <div class="container container--narrow empty">
+    <div class="empty__emoji">🎁</div>
+    <h1>{{ 'not_found.title' | t }}</h1>
+    <p>{{ 'not_found.text' | t }}</p>
+    <a class="btn btn--primary" href="{{ routes.root_url }}">{{ 'not_found.button' | t }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404 page"
+}
+{% endschema %}
