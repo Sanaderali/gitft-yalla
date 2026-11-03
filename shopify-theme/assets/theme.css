@@ -521,3 +521,13 @@ body.drawer-open{overflow:hidden}
 @keyframes cselFade{from{opacity:0}to{opacity:1}}
 .csel__opt.is-placeholder.is-selected{color:color-mix(in srgb,var(--c-ink) 52%,transparent);font-weight:400}
 .csel__opt.is-placeholder.is-selected::after{display:none}
+
+/* ---- v3.3: phones: tapping search collapses the city button to its flag and gives search the full width ---- */
+@media (max-width:989px){
+  .citypill{flex:none;max-width:230px;overflow:hidden;transition:max-width .32s cubic-bezier(.22,1,.36,1)}
+  .citypill .csel__btn{min-width:132px}
+  .header__search{transition:box-shadow .2s}
+  .header__row:has(.header__search:focus-within) .citypill{max-width:44px}
+  .header__row:has(.header__search:focus-within) .citypill .csel__btn{color:transparent;pointer-events:none}
+  .header__row:has(.header__search:focus-within) .citypill__caret{opacity:0}
+}
