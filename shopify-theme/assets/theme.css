@@ -373,3 +373,6 @@ form.hpill-form,.header__tools form{margin:0}
 
 /* skip rendering work for sections far below the fold */
 .section:not(:first-child),.footer{content-visibility:auto;contain-intrinsic-size:auto 520px}
+
+.drawer__loc{display:grid;gap:12px;margin-block-start:18px;padding-block-start:16px;border-block-start:1px solid #eceef4}
+.drawer__loc .hpill{width:100%;justify-content:center}

@@ -163,6 +163,33 @@
         {%- endfor -%}
       </ul>
     {%- endif -%}
+
+    {%- comment -%} Mobile: language + currency (the header pills are hidden on small screens) {%- endcomment -%}
+    <div class="drawer__loc">
+      {%- if localization.available_languages.size > 1 -%}
+        {%- form 'localization', id: 'DrawerLanguage' -%}
+          {%- for language in localization.available_languages -%}
+            {%- if language.iso_code != localization.language.iso_code -%}
+              <button class="hpill" type="submit" name="language_code" value="{{ language.iso_code }}">
+                {% render 'icon', name: 'globe' %}<span lang="{{ language.iso_code }}">{{ language.endonym_name }}</span>
+              </button>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endform -%}
+      {%- endif -%}
+      {%- if localization.available_countries.size > 1 -%}
+        {%- form 'localization', id: 'DrawerCountry' -%}
+          <label class="field">
+            <span class="field__label">{{ 'general.country' | t }}</span>
+            <select name="country_code" onchange="this.form.submit()">
+              {%- for country in localization.available_countries -%}
+                <option value="{{ country.iso_code }}"{% if country.iso_code == localization.country.iso_code %} selected{% endif %}>{{ country.name }} ({{ country.currency.iso_code }})</option>
+              {%- endfor -%}
+            </select>
+          </label>
+        {%- endform -%}
+      {%- endif -%}
+    </div>
   </div>
 </div>
 
