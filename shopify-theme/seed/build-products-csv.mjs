@@ -76,6 +76,15 @@ const P = [
   ['Premium Gift Wrap', 20, 'add-ons', 'same-day']
 ];
 
+// Which cities sell what. No entry = sold in every city. Tags become city-<slug> (e.g. city-jeddah).
+const CITY = {
+  'Sweet Darling 100 Red Roses': ['jeddah', 'riyadh'],
+  'Pastel Peony Bouquet': ['riyadh', 'jeddah', 'dammam'],
+  'Sunshine Gerbera Box': ['mecca', 'madinah'],
+  'Sunflower & Belgian Chocolate': ['mecca', 'madinah'],
+  'Dino Roar Kids Cake': ['riyadh', 'jeddah'],
+  'Bunny Buddy Kids Cake': ['riyadh', 'jeddah']
+};
 const header = ['Handle', 'Title', 'Body (HTML)', 'Vendor', 'Type', 'Tags', 'Published', 'Option1 Name', 'Option1 Value', 'Variant SKU', 'Variant Grams', 'Variant Inventory Tracker', 'Variant Inventory Policy', 'Variant Fulfillment Service', 'Variant Price', 'Variant Compare At Price', 'Variant Requires Shipping', 'Variant Taxable', 'Image Src', 'Image Position', 'Image Alt Text', 'Status'];
 const esc = (v) => { const s = String(v ?? ''); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 const slug = (t) => t.toLowerCase().replace(/&/g, 'and').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -90,7 +99,7 @@ const img = (cat, title, n) => {
 const rows = [header.map(esc).join(',')];
 P.forEach(([title, price, cat, extra, variants], i) => {
   const handle = slug(title);
-  const tags = [cat, ...extra.split(' ')].filter(Boolean).join(', ');
+  const tags = [cat, ...extra.split(' '), ...(CITY[title] || []).map((c) => `city-${c}`)].filter(Boolean).join(', ');
   const body = `<p>${title}. A beautiful dummy product, replace this text, photos and price with your own.</p><ul><li>Hand-wrapped and delivered fresh</li><li>Free gift card message</li><li>Same-day delivery in selected cities</li></ul>`;
   const sku = `GY-${String(i + 1).padStart(3, '0')}`;
   const list = variants ? variants[1] : [['Default Title', 0]];

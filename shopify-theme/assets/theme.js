@@ -13,15 +13,22 @@
   const cfgEl = $('#delivery-config');
   const CFG = cfgEl ? JSON.parse(cfgEl.textContent) : null;
 
-  /* ---------- drawer ---------- */
+  /* ---------- drawer (class-based so it can slide) ---------- */
+  const setDrawer = (el, open) => {
+    el.classList.toggle('is-open', open);
+    document.body.classList.toggle('drawer-open', open);
+    if (open) { const x = $('.drawer__x', el); if (x) x.focus({ preventScroll: true }); }
+  };
   document.addEventListener('click', (e) => {
     const opener = e.target.closest('[data-open]');
-    if (opener) { const t = $(opener.dataset.open); if (t) { t.hidden = false; document.body.style.overflow = 'hidden'; } }
+    if (opener) { const t = $(opener.dataset.open); if (t) setDrawer(t, true); }
     const closer = e.target.closest('[data-close]');
-    if (closer) { const d = closer.closest('.drawer'); if (d) { d.hidden = true; document.body.style.overflow = ''; } }
+    if (closer) { const d = closer.closest('.drawer'); if (d) setDrawer(d, false); }
+    const link = e.target.closest('.drawer a[href]');
+    if (link) { const d = link.closest('.drawer'); if (d) setDrawer(d, false); }
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { $$('.drawer').forEach((d) => { d.hidden = true; }); document.body.style.overflow = ''; }
+    if (e.key === 'Escape') $$('.drawer.is-open').forEach((d) => setDrawer(d, false));
   });
 
   /* ---------- auto-submit filter/sort forms ---------- */
@@ -96,16 +103,40 @@
     });
   }
 
-  /* ---------- city pill (remembers the customer's city) ---------- */
+  /* ---------- city: remembered, filters products (data-cities) ---------- */
   const CITY_KEY = 'gy_city';
+  const slugify = (c) => String(c || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const pills = $$('[data-city-pill]');
-  pills.forEach((p) => {
-    p.value = store.get(CITY_KEY, '') || '';
-    p.addEventListener('change', () => {
-      store.set(CITY_KEY, p.value);
-      $$('[data-dpick] [data-f="city"]').forEach((c) => { c.value = p.value; });
+  function applyCity(city) {
+    const slug = slugify(city);
+    if (slug) document.documentElement.setAttribute('data-city', slug); else document.documentElement.removeAttribute('data-city');
+    // hide whole rows/sections when none of their products are sold in this city
+    $$('main .section').forEach((sec) => {
+      const cards = $$('.pcard', sec);
+      if (!cards.length) return;
+      const ok = (c) => !c.dataset.cities || !slug || c.dataset.cities.split(' ').includes(slug);
+      sec.hidden = !cards.some(ok);
     });
-  });
+    // product page: is this gift sold in the chosen city?
+    const prod = $('[data-product]');
+    if (prod) {
+      const list = (prod.dataset.cities || '').split(' ').filter(Boolean);
+      const bad = !!slug && list.length > 0 && !list.includes(slug);
+      const warn = $('[data-city-warning]', prod);
+      if (warn) { warn.hidden = !bad; const n = $('[data-city-name]', warn); if (n) n.textContent = city; }
+      const btn = $('[data-add]', prod);
+      if (btn) { btn.classList.toggle('is-unavailable', bad); btn.setAttribute('aria-disabled', bad); }
+    }
+  }
+  const savedCity = store.get(CITY_KEY, '') || '';
+  const setCity = (city, from) => {
+    store.set(CITY_KEY, city);
+    pills.forEach((p) => { if (p !== from) p.value = city; });
+    $$('[data-dpick] [data-f="city"]').forEach((c) => { if (c !== from && [...c.options].some((o) => o.value === city)) c.value = city; });
+    applyCity(city);
+  };
+  pills.forEach((p) => { p.value = savedCity; p.addEventListener('change', () => setCity(p.value, p)); });
+  applyCity(savedCity);
 
   /* ================= DELIVERY ================= */
   if (!CFG) return;
@@ -144,8 +175,8 @@
       this.errEl = $('[data-d-error]', root);
       this.date = ''; this.slot = '';
       const city = this.f('city');
-      city.value = store.get(CITY_KEY, '') || '';
-      city.addEventListener('change', () => { store.set(CITY_KEY, city.value); pills.forEach((p) => { p.value = city.value; }); });
+      city.value = [...city.options].some((o) => o.value === savedCity) ? savedCity : '';
+      city.addEventListener('change', () => setCity(city.value, city));
       this.render(true);
       setInterval(() => this.render(false), 30000);
     }
@@ -256,6 +287,7 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       errEl.hidden = true;
+      if (addBtn.classList.contains('is-unavailable')) { $('[data-city-warning]', pdp).scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
       const problem = picker.validate();
       if (problem) { picker.error(problem); picker.root.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
       const props = {};

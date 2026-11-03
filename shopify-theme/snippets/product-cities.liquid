@@ -1,0 +1,11 @@
+{%- comment -%}
+  Outputs the cities a product is sold in, as slugs separated by spaces.
+  Tag a product `city-jeddah` (or city-mecca, city-al-khobar...) to limit it to those cities.
+  No city tags = available in every city.
+  Usage: {%- capture pcities -%}{% render 'product-cities', product: product %}{%- endcapture -%}
+{%- endcomment -%}
+{%- for t in product.tags -%}
+  {%- assign tl = t | downcase -%}
+  {%- assign pre = tl | slice: 0, 5 -%}
+  {%- if pre == 'city-' -%}{{ tl | slice: 5, 40 }} {% endif -%}
+{%- endfor -%}

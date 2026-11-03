@@ -3,7 +3,9 @@
   day + time window has to be chosen before adding to cart.
   Usage: {% render 'product-card', product: product %}
 {%- endcomment -%}
-<article class="pcard">
+{%- capture pcities -%}{% render 'product-cities', product: product %}{%- endcapture -%}
+{%- assign pcities = pcities | strip -%}
+<article class="pcard"{% if pcities != blank %} data-cities="{{ pcities }}"{% endif %}>
   <div class="pcard__media">
     <a class="pcard__link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
       {%- if product.featured_image -%}

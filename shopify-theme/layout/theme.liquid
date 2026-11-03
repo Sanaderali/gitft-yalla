@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="{{ font_url }}" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="{{ font_url }}"></noscript>
 
+    {% render 'city-availability' %}
     {{ content_for_header }}
 
     {% style %}

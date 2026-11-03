@@ -10,7 +10,9 @@
     endunless
   endfor
 -%}
-<section class="section pdp" data-product>
+{%- capture pcities -%}{% render 'product-cities', product: product %}{%- endcapture -%}
+{%- assign pcities = pcities | strip -%}
+<section class="section pdp" data-product data-cities="{{ pcities }}">
   <div class="container">
     <nav class="crumbs" aria-label="Breadcrumb">
       <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
@@ -74,7 +76,9 @@
             {%- endfor -%}
           {%- endunless -%}
 
-          {% render 'delivery-picker' %}
+          <p class="city-warn" data-city-warning hidden role="alert">{{ 'product.not_in_city_html' | t: city: '<span data-city-name></span>' }}</p>
+          {% render 'delivery-picker', only_cities: pcities %}
+          {% render 'trust-badges' %}
 
           <label class="field">
             <span class="field__label">{{ 'product.gift_message' | t }}</span>

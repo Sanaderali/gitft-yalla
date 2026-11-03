@@ -28,7 +28,8 @@
     "best_seller": "Best seller",
     "new": "New",
     "choose_options": "Choose options",
-    "from": "From"
+    "from": "From",
+    "chat_whatsapp": "Chat on WhatsApp"
   },
   "product": {
     "add_to_cart": "Add to cart",
@@ -40,7 +41,8 @@
     "addons": "Make it extra special",
     "addons_sub": "Add a little something. It's delivered together.",
     "you_may_like": "You may also like",
-    "adding": "Adding…"
+    "adding": "Adding…",
+    "not_in_city_html": "Sorry, this gift isn't available in {{ city }}. Pick another city or browse gifts available there."
   },
   "delivery": {
     "title": "When should it arrive?",
@@ -116,5 +118,15 @@
     "title": "Oops, this gift got lost",
     "text": "The page you're looking for doesn't exist.",
     "button": "Back to home"
+  },
+  "trust": {
+    "fresh_t": "Fresh guarantee",
+    "fresh_s": "Fresh gifts or we make it right",
+    "time_t": "On-time delivery",
+    "time_s": "Your exact time window",
+    "cod_t": "Pay on delivery",
+    "cod_s": "Cash on delivery available",
+    "secure_t": "Secure checkout",
+    "secure_s": "Your details stay protected"
   }
 }

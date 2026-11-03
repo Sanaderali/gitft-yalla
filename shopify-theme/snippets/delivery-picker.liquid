@@ -4,10 +4,11 @@
   The hidden inputs become line item properties:
     City, Delivery date, Delivery slot   (visible to customer and in admin)
     _Date, _Slot                         (hidden helpers used for validation)
-  Usage: {% render 'delivery-picker' %}
+  Usage: {% render 'delivery-picker' %}  or  {% render 'delivery-picker', only_cities: 'jeddah mecca' %}
 {%- endcomment -%}
 {%- liquid
   assign city_lines = settings.delivery_cities | newline_to_br | strip_newlines | split: '<br />'
+  assign allowed = only_cities | split: ' '
 -%}
 <div class="dpick" data-dpick>
   <div class="dpick__head">
@@ -21,7 +22,8 @@
       <option value="">{{ 'delivery.choose_city' | t }}</option>
       {%- for line in city_lines -%}
         {%- assign c = line | strip -%}
-        {%- if c != blank -%}<option value="{{ c | escape }}">{{ c }}</option>{%- endif -%}
+        {%- assign cslug = c | handleize -%}
+        {%- if c != blank and allowed.size == 0 or c != blank and allowed contains cslug -%}<option value="{{ c | escape }}">{{ c }}</option>{%- endif -%}
       {%- endfor -%}
     </select>
   </label>
